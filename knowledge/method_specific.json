@@ -1,0 +1,334 @@
+{
+    "inspect_data": {
+        "id": "inspect_data",
+        "methods": {
+            "inspect_dataset": {
+                "purpose": "Inspect the active dataset's structure, dimensions, data types, missing values, and duplicates.",
+                "parameters": []
+            },
+            "analyze_missing_values": {
+                "purpose": "Calculate missing-value counts and percentages for every column.",
+                "parameters": []
+            },
+            "analyze_duplicates": {
+                "purpose": "Calculate the number and percentage of duplicate rows.",
+                "parameters": []
+            },
+            "analyze_datatypes": {
+                "purpose": "Analyze each column's data type, unique values, and missing values.",
+                "parameters": []
+            },
+            "analyze_numeric_columns": {
+                "purpose": "Measure how many non-missing values in each column can be converted to numeric values.",
+                "parameters": []
+            },
+            "decide_missing_value_strategy": {
+                "purpose": "Assign an initial missing-value handling strategy to each column.",
+                "parameters": []
+            },
+            "inspect_problematic_values": {
+                "purpose": "Print sample values to help identify problematic data.",
+                "parameters": []
+            },
+            "remove_duplicates": {
+                "purpose": "Remove duplicate rows and update the active dataset.",
+                "parameters": []
+            },
+            "prepare_missing_value_analysis": {
+                "purpose": "Return missing-value counts for columns containing missing values.",
+                "parameters": []
+            },
+            "inspect_missing_value_columns": {
+                "purpose": "Inspect columns with missing values and display sample non-missing values.",
+                "parameters": []
+            },
+            "clean_numeric_column": {
+                "purpose": "Clean numeric-looking values and convert them into numeric data.",
+                "parameters": [
+                    "column"
+                ]
+            },
+            "clean_abbreviated_numbers": {
+                "purpose": "Convert abbreviated numeric values into numeric values.",
+                "parameters": [
+                    "column"
+                ]
+            },
+            "clean_boolean_column": {
+                "purpose": "Convert values to True, False, or None using supplied mappings.",
+                "parameters": [
+                    "column",
+                    "true_values",
+                    "false_values"
+                ]
+            },
+            "handle_missing_values": {
+                "purpose": "Drop rows containing missing values in a selected column or fill them with Unknown.",
+                "parameters": [
+                    "column",
+                    "action"
+                ]
+            },
+            "clean_text_column": {
+                "purpose": "Convert a column to strings and remove leading and trailing whitespace.",
+                "parameters": [
+                    "column"
+                ]
+            },
+            "convert_to_numeric": {
+                "purpose": "Convert a column to numeric values, replacing unconvertible values with NaN.",
+                "parameters": [
+                    "column"
+                ]
+            },
+            "validate_cleaning": {
+                "purpose": "Validate the dataset after cleaning.",
+                "parameters": []
+            },
+            "final_cleaning_report": {
+                "purpose": "Display a final report summarizing the cleaning status.",
+                "parameters": []
+            }
+        }
+    },
+
+    "dataset_management": {
+        "id": "dataset_management",
+        "methods": {
+            "load_dataset": {
+                "purpose": "Load a dataset from a validated file path. If the user gives a full path, use that exact path. If the user gives only a filename, use the file in C:\\Users\\ayush\\OneDrive\\Desktop by default. Never assume the GLACIER project data folder is the default.",
+                "parameters": [
+                    "file_path"
+                ]
+            },
+            "show_active_dataset": {
+                "purpose": "Shows and refreshes/reloads the currently active dataset's name, path, file type, shape, and last operation.",
+                "parameters": []
+            },
+            "drop_dataset": {
+                "purpose": "Remove the currently active dataset from GLACIER's memory by clearing the active DataFrame. Do not delete the original dataset file from the computer.",
+                "parameters": []
+            }
+        }
+    },
+
+    "export_manager": {
+        "id": "export_manager",
+        "methods": {
+            "export_csv": {
+                "purpose": "Export the currently active Pandas DataFrame to a CSV file at the specified file path.",
+                "parameters": [
+                    "file_path"
+                ]
+            },
+            "export_excel": {
+                "purpose": "Export the currently active Pandas DataFrame to an Excel file at the specified file path.",
+                "parameters": [
+                    "file_path"
+                ]
+            },
+            "SQL_Quaries": {
+                "purpose": "Execute a SQL query against MySQL and return query results or execution status.",
+                "parameters": [
+                    "Host",
+                    "User",
+                    "Password",
+                    "quary",
+                    "Database"
+                ]
+            },
+            "Export_to_SQL": {
+                "purpose": "Export the active Pandas DataFrame into a new table in an existing MySQL database.",
+                "parameters": [
+                    "Host",
+                    "User",
+                    "Password",
+                    "Database_name",
+                    "Table_name"
+                ]
+            },
+            "create_database": {
+                "purpose": "Create a MySQL database if it does not already exist.",
+                "parameters": [
+                    "Host",
+                    "User",
+                    "Password",
+                    "Database_name"
+                ]
+            }
+        }
+    },
+    
+    "file_access": {
+        "id": "file_access",
+        "methods": {
+            "check_path": {
+                "purpose": "Check whether a specified file or directory path exists.",
+                "parameters": [
+                    "path"
+                ]
+            },
+            "identify_path": {
+                "purpose": "Identify whether a path points to a file, directory, or nonexistent location.",
+                "parameters": [
+                    "path"
+                ]
+            },
+            "list_items": {
+                "purpose": "List files and subdirectories inside a specified directory.",
+                "parameters": [
+                    "path"
+                ]
+            },
+            "get_file_type": {
+                "purpose": "Return the lowercase file extension of a valid file.",
+                "parameters": [
+                    "file_path"
+                ]
+            },
+            "search_file": {
+                "purpose": "PRIMARY FILE SEARCH METHOD. Use this method when the user asks to find, search for, locate, or identify a file by its filename or keywords, including requests such as finding a sales file on the Desktop. Searches recursively inside the directory provided through directory_path and filters supported CSV, Excel, and JSON files. If the user specifies a recognized folder such as Desktop, use this method to find the requested file; resolving the folder path is a supporting step, not the final goal. Requires directory_path and file_name.",
+                "parameters": [
+                    "directory_path",
+                    "file_name"
+                ]
+            },
+            "get_location": {
+                "purpose": "FOLDER LOCATION LOOKUP ONLY. Use this method when the user asks where a recognized folder such as Desktop, Downloads, Documents, Pictures, or Videos is located, or explicitly asks for its filesystem path. Returns the folder path. Do not use this method as the final action when the user asks to find a specific file inside that folder and search_file is available.",
+                "parameters": [
+                    "location_name"
+                ]
+            },
+            "get_path": {
+                "purpose": "Validate a path and return it as a Path object if it exists.",
+                "parameters": [
+                    "path"
+                ]
+            },
+            "get_file_info": {
+                "purpose": "Return a file's name, path, extension, and parent directory.",
+                "parameters": [
+                    "file_path"
+                ]
+            }
+        }
+    },
+    "python_executioner": {
+        "id": "python_executioner",
+        "methods": {
+            "execute": {
+                "purpose": "Execute Python expressions or statements in a persistent namespace and capture their output or errors. This is GLACIER's primary, high-priority execution tool and should generally be preferred for Python operations when appropriate, while still allowing specialist tools to handle tasks better suited to them.",
+                "parameters": [
+                    "code"
+                ]
+            }
+        }
+    },
+    "statistics": {
+        "id": "statistics",
+        "methods": {
+            "inspect_statistical_data": {
+                "purpose": "Inspect the active dataset's columns, data types, missing values, unique values, and numeric-column status before statistical analysis.",
+                "parameters": []
+            },
+            "calculate_descriptive_stats": {
+                "purpose": "Calculate descriptive statistics for eligible numeric columns, including mean, median, mode, minimum, maximum, range, standard deviation, variance, quartiles, and IQR.",
+                "parameters": []
+            },
+            "analyze_distribution": {
+                "purpose": "Analyze the distribution of eligible numeric columns by calculating skewness and kurtosis.",
+                "parameters": []
+            },
+            "analyze_outliers": {
+                "purpose": "Identify potential outliers in numeric columns using the IQR method and report quartiles, IQR, lower and upper boundaries, outlier counts, and outlier percentages without automatically deleting observations.",
+                "parameters": []
+            },
+            "analyze_correlation": {
+                "purpose": "Calculate the correlation between two eligible numeric columns to measure the direction and strength of their linear relationship.",
+                "parameters": [
+                    "col1",
+                    "col2"
+                ]
+            },
+            "analyze_covariance": {
+                "purpose": "Calculate the covariance between two eligible numeric columns to describe how their values vary together.",
+                "parameters": [
+                    "col1",
+                    "col2"
+                ]
+            },
+            "z_two_tailed_test": {
+                "purpose": "Perform a two-tailed z-test using a dataset column, hypothesized population mean, and significance level. Return the z-score, critical value, and hypothesis-test decision.",
+                "parameters": [
+                    "column",
+                    "population_mean",
+                    "significance_level"
+                ]
+            },
+            "z_one_tailed_test": {
+                "purpose": "Perform a left-tailed or right-tailed z-test using a dataset column, direction, hypothesized population mean, and significance level. Return the z-score, critical value, p-value,"
+            }
+        }
+    },
+    "visualisation": {
+        "id": "visualisation",
+        "methods": {
+            "bar_chart": {
+                "purpose": "Create a bar chart to compare values across categories using the selected x and y columns from the active dataset.",
+                "parameters": [
+                    "x",
+                    "y"
+                ]
+            },
+            "line_chart": {
+                "purpose": "Create a line chart to visualize how a numeric variable changes across the values or order of another column.",
+                "parameters": [
+                    "x",
+                    "y"
+                ]
+            },
+            "scatter_plot": {
+                "purpose": "Create a scatter plot to visualize the relationship between two selected columns and identify possible patterns or associations.",
+                "parameters": [
+                    "x",
+                    "y"
+                ]
+            },
+            "histogram": {
+                "purpose": "Create a histogram to visualize the frequency distribution of values in a selected dataset column.",
+                "parameters": [
+                    "column"
+                ]
+            },
+            "box_plot": {
+                "purpose": "Create a box plot to visualize the spread, quartiles, median, and potential outliers of a selected dataset column.",
+                "parameters": [
+                    "column"
+                ]
+            },
+            "density_plot": {
+                "purpose": "Create a kernel density estimation (KDE) plot to visualize the smooth distribution shape of a selected dataset column.",
+                "parameters": [
+                    "column"
+                ]
+            },
+            "count_plot": {
+                "purpose": "Create a count plot to display the frequency of each category or value in a selected dataset column.",
+                "parameters": [
+                    "column"
+                ]
+            },
+            "joint_plot": {
+                "purpose": "Create a joint plot to visualize the relationship between two selected columns alongside their individual distributions.",
+                "parameters": [
+                    "x",
+                    "y"
+                ]
+            },
+            "pair_plot": {
+                "purpose": "Create a pair plot for numeric columns to visualize pairwise relationships and individual distributions across multiple variables.",
+                "parameters": []
+            }
+        }
+    }
+}

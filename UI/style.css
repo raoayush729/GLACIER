@@ -1,0 +1,904 @@
+:root {
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #e8edf5;
+    background: #0b1018;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-width: 700px;
+    min-height: 100vh;
+    background:
+        radial-gradient(ellipse at top right, #17263b 0%, transparent 45%),
+        #0b1018;
+}
+
+.app-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.topbar {
+    height: 82px;
+    padding: 0 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #222c3b;
+    background: rgba(11, 16, 24, 0.85);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.brand-icon,
+.message-avatar {
+    display: grid;
+    place-items: center;
+    background: #76a9fa;
+    color: #09111e;
+    font-weight: 800;
+    border-radius: 12px;
+}
+
+.brand-icon {
+    width: 42px;
+    height: 42px;
+    font-size: 23px;
+}
+
+.brand h1 {
+    margin: 0;
+    font-size: 19px;
+    letter-spacing: 3px;
+}
+
+.brand p {
+    margin: 5px 0 0;
+    color: #7f91aa;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: #a8b6c9;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #e9b45c;
+}
+
+.main-content {
+    width: min(900px, 90%);
+    margin: 0 auto;
+    flex: 1;
+    padding: 70px 0 40px;
+}
+
+.eyebrow {
+    color: #76a9fa;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+.welcome h2 {
+    margin: 15px 0;
+    font-size: clamp(27px, 4vw, 38px);
+    font-weight: 600;
+}
+
+.subtitle {
+    max-width: 650px;
+    color: #91a0b5;
+    line-height: 1.7;
+    font-size: 14px;
+}
+
+.workspace {
+    margin-top: 45px;
+    padding: 24px;
+    border: 1px solid #263449;
+    border-radius: 16px;
+    background: rgba(16, 24, 36, 0.88);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #263142;
+}
+
+.section-heading h3 {
+    margin: 0;
+    font-size: 15px;
+}
+
+.section-heading span {
+    color: #8495ac;
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+
+.chat-area {
+    min-height: 180px;
+    padding: 25px 0;
+}
+
+.assistant-message {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+}
+
+.message-avatar {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+}
+
+.message-content strong {
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: #9bbcff;
+}
+
+.message-content p {
+    margin-top: 9px;
+    color: #c0cada;
+    line-height: 1.7;
+    font-size: 13px;
+}
+
+.input-area {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    padding: 12px;
+    border: 1px solid #34445b;
+    border-radius: 12px;
+    background: #0c131e;
+}
+
+textarea {
+    flex: 1;
+    resize: vertical;
+    min-height: 48px;
+    max-height: 160px;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #edf3ff;
+    font: inherit;
+    font-size: 13px;
+    line-height: 1.6;
+    padding: 10px 5px;
+}
+
+textarea::placeholder {
+    color: #65758c;
+}
+
+button {
+    border: none;
+    border-radius: 9px;
+    padding: 12px 20px;
+    background: #76a9fa;
+    color: #09111e;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #9bbfff;
+}
+
+button:disabled {
+    opacity: 0.55;
+    cursor: wait;
+}
+
+.input-hint {
+    margin: 13px 0 0;
+    color: #6e8098;
+    font-size: 10px;
+}
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 36px;
+    border-top: 1px solid #222c3b;
+    color: #687a92;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+}
+
+.action-output {
+    margin-top: 24px;
+    padding: 20px;
+    border: 1px solid #29364b;
+    border-radius: 12px;
+    background: #101827;
+    color: #e6edf7;
+}
+
+.action-output[hidden] {
+    display: none;
+}
+
+.action-output-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.action-output-header h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+#sqlRowCount {
+    font-size: 12px;
+    color: #9aabc2;
+}
+
+.sql-status {
+    margin-bottom: 14px;
+    font-size: 13px;
+    color: #91d6ae;
+}
+
+.sql-table-container {
+    width: 100%;
+    overflow: auto;
+    max-height: 350px;
+}
+
+#sqlResultTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+#sqlResultTable th,
+#sqlResultTable td {
+    padding: 10px 12px;
+    border: 1px solid #29364b;
+    text-align: left;
+    white-space: nowrap;
+}
+
+#sqlResultTable th {
+    background: #1c2a3d;
+    color: #b9d8ff;
+    position: sticky;
+    top: 0;
+}
+
+#sqlResultTable td {
+    color: #d6dfec;
+}
+
+#sqlResultTable tbody tr:nth-child(even) {
+    background: #172234;
+}
+
+/* ==============================
+   DATASET VIEWER
+================================ */
+
+.dataset-viewer {
+    margin-top: 24px;
+    padding: 20px;
+    border: 1px solid #29364b;
+    border-radius: 12px;
+    background: #101827;
+    color: #e6edf7;
+}
+
+.dataset-viewer[hidden] {
+    display: none;
+}
+
+.dataset-viewer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.dataset-viewer-header h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #e8edf5;
+    overflow-wrap: anywhere;
+}
+
+#datasetPath {
+    margin: 8px 0 0;
+    color: #8495ac;
+    font-size: 11px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+#datasetDimensions {
+    flex-shrink: 0;
+    color: #9bbcff;
+    font-size: 12px;
+    text-align: right;
+}
+
+.dataset-status {
+    margin-bottom: 14px;
+    color: #91a0b5;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* Scrollable table area */
+
+.dataset-table-container {
+    width: 100%;
+    max-height: 420px;
+    overflow: auto;
+    overscroll-behavior: contain;
+    border: 1px solid #29364b;
+    border-radius: 8px;
+    scrollbar-width: thin;
+    scrollbar-color: #435875 #101827;
+}
+
+#datasetTable {
+    width: max-content;
+    min-width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 12px;
+}
+
+#datasetTable th,
+#datasetTable td {
+    padding: 10px 12px;
+    border-right: 1px solid #29364b;
+    border-bottom: 1px solid #29364b;
+    text-align: left;
+    white-space: nowrap;
+    max-width: 320px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#datasetTable th:first-child,
+#datasetTable td:first-child {
+    border-left: 1px solid #29364b;
+}
+
+#datasetTable th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: #1c2a3d;
+    color: #b9d8ff;
+    font-weight: 700;
+}
+
+#datasetTable td {
+    color: #d6dfec;
+}
+
+#datasetTable tbody tr:nth-child(even) {
+    background: #172234;
+}
+
+#datasetTable tbody tr:hover {
+    background: #203149;
+}
+
+/* Pagination controls */
+
+.dataset-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.dataset-pagination button {
+    padding: 9px 14px;
+    font-size: 12px;
+}
+
+.dataset-pagination button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+#datasetPageInfo {
+    color: #a8b6c9;
+    font-size: 12px;
+    text-align: center;
+}
+
+/* Keep the viewer usable in narrower windows */
+
+@media (max-width: 760px) {
+    .dataset-viewer {
+        padding: 14px;
+    }
+
+    .dataset-viewer-header {
+        flex-direction: column;
+    }
+
+    #datasetDimensions {
+        text-align: left;
+    }
+
+    .dataset-pagination {
+        flex-wrap: wrap;
+    }
+}
+
+/* ==============================
+   SQL ACCESS
+================================ */
+
+.topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.sql-access-button {
+    padding: 10px 16px;
+    border: 1px solid #405a7b;
+    background: #152338;
+    color: #b9d8ff;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+.sql-access-button:hover {
+    background: #203653;
+}
+
+.sql-modal[hidden],
+#sqlDisconnectButton[hidden] {
+    display: none !important;
+}
+
+.sql-modal:not([hidden]) {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+}
+
+.sql-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(3, 7, 13, 0.82);
+    backdrop-filter: blur(5px);
+}
+
+.sql-modal-card {
+    position: relative;
+    z-index: 1;
+    width: min(460px, 100%);
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 28px;
+    border: 1px solid #34445b;
+    border-radius: 16px;
+    background: #101827;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+}
+
+.sql-modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+.sql-modal-header .eyebrow {
+    margin: 0 0 10px;
+}
+
+.sql-modal-header h2 {
+    margin: 0;
+    font-size: 23px;
+    letter-spacing: 2px;
+}
+
+.sql-close-button {
+    padding: 2px 9px;
+    background: transparent;
+    color: #a8b6c9;
+    font-size: 28px;
+}
+
+.sql-close-button:hover {
+    background: #253349;
+    color: #fff;
+}
+
+.sql-connection-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+    padding: 12px;
+    border: 1px solid #29364b;
+    border-radius: 9px;
+    background: #0b131f;
+    color: #a8b6c9;
+    font-size: 12px;
+}
+
+.connection-dot {
+    width: 9px;
+    height: 9px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #8495ac;
+}
+
+.connection-dot.online {
+    background: #62d99b;
+    box-shadow: 0 0 10px rgba(98, 217, 155, 0.35);
+}
+
+.connection-dot.offline {
+    background: #ef7777;
+}
+
+#sqlAccessForm label {
+    display: block;
+    margin: 16px 0 7px;
+    color: #bdc9da;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+#sqlAccessForm label span {
+    color: #8495ac;
+    font-weight: 400;
+}
+
+#sqlAccessForm input {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    padding: 12px;
+    border: 1px solid #34445b;
+    border-radius: 8px;
+    outline: none;
+    background: #0b131f;
+    color: #edf3ff;
+    font: inherit;
+    font-size: 13px;
+}
+
+#sqlAccessForm input:focus {
+    border-color: #76a9fa;
+    box-shadow: 0 0 0 2px rgba(118, 169, 250, 0.12);
+}
+
+#sqlAccessForm input::placeholder {
+    color: #65758c;
+}
+
+.sql-access-message {
+    min-height: 36px;
+    margin: 16px 0;
+    color: #9aabc2;
+    font-size: 12px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.sql-access-message.success {
+    color: #91d6ae;
+}
+
+.sql-access-message.error {
+    color: #ff9999;
+}
+
+.sql-modal-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.sql-modal-actions button {
+    flex: 1;
+    padding: 12px 10px;
+    font-size: 12px;
+}
+
+.sql-modal-actions .secondary-button {
+    border: 1px solid #405a7b;
+    background: #17263b;
+    color: #c5d9f7;
+}
+
+.sql-modal-actions .secondary-button:hover {
+    background: #243a56;
+}
+
+.disconnect-button {
+    width: 100%;
+    margin-top: 12px;
+    border: 1px solid #74424a;
+    background: #351e26;
+    color: #ffb5b5;
+}
+
+.disconnect-button:hover {
+    background: #512630;
+}
+
+@media (max-width: 760px) {
+    .topbar {
+        padding: 0 18px;
+    }
+
+    .topbar-actions {
+        gap: 12px;
+    }
+
+    .sql-access-button {
+        padding: 9px 10px;
+        font-size: 10px;
+    }
+
+    .status {
+        font-size: 9px;
+    }
+
+    .sql-modal-card {
+        padding: 20px;
+    }
+
+    .sql-modal-actions {
+        flex-direction: column;
+    }
+}
+
+/* ==============================
+   GLACIER THEME (look and feel)
+   Fonts are built into Windows 10/11, so nothing to download.
+================================ */
+
+:root {
+    --font-display: "Bahnschrift", "Segoe UI Variable Display", "Segoe UI", sans-serif;
+    --font-body: "Segoe UI Variable Text", "Segoe UI", Arial, sans-serif;
+    --font-mono: "Cascadia Mono", "Cascadia Code", Consolas, monospace;
+    font-family: var(--font-body);
+}
+
+body {
+    background:
+        radial-gradient(ellipse at top right, #17263b 0%, transparent 45%),
+        radial-gradient(ellipse at bottom left, rgba(110, 80, 220, 0.14) 0%, transparent 50%),
+        #0b1018;
+    background-attachment: fixed;
+}
+
+/* Fonts */
+.brand h1, .welcome h2, .section-heading h3, .message-content strong,
+.eyebrow, .brand p, .status, footer, button, .section-heading span {
+    font-family: var(--font-display);
+}
+
+.response-timing, #voiceStatus, .input-hint, #sqlRowCount,
+#datasetDimensions, #datasetPageInfo, #datasetPath {
+    font-family: var(--font-mono);
+}
+
+.brand h1 { font-weight: 600; letter-spacing: 5px; }
+
+.welcome h2 {
+    font-weight: 300;
+    font-size: clamp(32px, 4.6vw, 48px);
+    letter-spacing: -0.5px;
+    background: linear-gradient(90deg, #ffffff 0%, #b9d4ff 55%, #c7b6ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* Window: draggable top bar (the native title bar is hidden) */
+.topbar {
+    padding-right: 160px;               /* room for the window buttons */
+    background: linear-gradient(180deg, rgba(15, 23, 36, 0.92), rgba(11, 16, 24, 0.7));
+    backdrop-filter: blur(12px);
+    border-bottom: none;
+    box-shadow: 0 1px 0 rgba(118, 169, 250, 0.14);
+    -webkit-app-region: drag;
+}
+.topbar button, .topbar-actions { -webkit-app-region: no-drag; }
+body:has(.sql-modal:not([hidden])) .topbar,
+body:has(.approval-modal:not([hidden])) .topbar { -webkit-app-region: no-drag; }
+
+/* Logo */
+.brand-icon, .message-avatar {
+    background: linear-gradient(135deg, #76a9fa, #9b7cf6);
+    color: #fff;
+}
+.brand-icon { box-shadow: 0 0 22px rgba(118, 169, 250, 0.35); }
+
+/* Workspace card with a soft gradient border */
+.workspace {
+    border: 1px solid transparent;
+    border-radius: 20px;
+    background:
+        linear-gradient(rgba(14, 21, 33, 0.93), rgba(14, 21, 33, 0.93)) padding-box,
+        linear-gradient(135deg, rgba(118, 169, 250, 0.55), rgba(139, 124, 246, 0.16) 45%, rgba(236, 72, 153, 0.3)) border-box;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35), 0 0 60px rgba(90, 130, 230, 0.08);
+}
+
+/* Input box glows when focused */
+.input-area { border-radius: 14px; transition: border-color 0.2s, box-shadow 0.2s; }
+.input-area:focus-within {
+    border-color: #76a9fa;
+    box-shadow: 0 0 0 3px rgba(118, 169, 250, 0.14), 0 0 24px rgba(118, 169, 250, 0.15);
+}
+
+#sendButton {
+    background: linear-gradient(135deg, #76a9fa, #9288f8);
+    color: #0a1020;
+    box-shadow: 0 6px 20px rgba(118, 169, 250, 0.25);
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+#sendButton:hover { transform: translateY(-1px); box-shadow: 0 8px 26px rgba(118, 169, 250, 0.4); }
+
+/* New messages fade in */
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } }
+.chat-area > * { animation: rise 0.35s ease both; }
+
+/* Slim dark scrollbars instead of the white default */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #2a3a52; border-radius: 10px; border: 2px solid #0b1018; }
+::-webkit-scrollbar-thumb:hover { background: #3d5578; }
+
+/* New GLACIER logo image (brand icon + assistant avatars) */
+.brand-icon:has(img), .message-avatar:has(img) { background: none; overflow: hidden; border-radius: 50%; }
+.brand-icon img, .message-avatar img {
+    width: 100%; height: 100%; display: block;
+    object-fit: cover; border-radius: inherit;
+}
+
+/* Slightly larger logo */
+.brand-icon:has(img) { width: 54px; height: 54px; }
+.message-avatar:has(img) { width: 40px; height: 40px; }
+
+/* ---------- Approval card: Yes / No / Edit ---------- */
+.approval-modal[hidden] { display: none !important; }
+.approval-modal:not([hidden]) {
+    position: fixed; inset: 0; z-index: 1100;
+    display: grid; place-items: center; padding: 24px;
+}
+.approval-backdrop {
+    position: absolute; inset: 0;
+    background: rgba(3, 7, 13, 0.82); backdrop-filter: blur(5px);
+}
+.approval-card {
+    position: relative; z-index: 1;
+    width: min(780px, 100%); max-height: 92vh; overflow-y: auto;
+    padding: 26px 28px;
+    border: 1px solid #34445b; border-radius: 16px;
+    background: #101827; box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+}
+.approval-card h2 { margin: 4px 0 6px; font-size: 20px; }
+.approval-description { margin: 0 0 14px; color: #9fb1c9; font-size: 13px; line-height: 1.5; }
+.approval-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 6px; }
+.approval-meta:empty { display: none; }
+.approval-meta span {
+    padding: 4px 10px; border: 1px solid #2b3b52; border-radius: 999px;
+    background: #0b1422; color: #9fb1c9; font-size: 11px; font-family: var(--font-mono);
+}
+.approval-field label {
+    display: block; margin: 14px 0 6px;
+    color: #76a9fa; font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+}
+.approval-field textarea, .approval-field input {
+    width: 100%; box-sizing: border-box; padding: 12px 14px;
+    border: 1px solid #2b3b52; border-radius: 10px;
+    background: #0b1422; color: #cfe2ff; outline: none;
+    font: 13px/1.55 var(--font-mono); resize: vertical;
+}
+.approval-field textarea { min-height: 220px; max-height: 50vh; white-space: pre; tab-size: 4; }
+.approval-card.editing .approval-field textarea,
+.approval-card.editing .approval-field input {
+    border-color: #76a9fa; color: #fff; box-shadow: 0 0 0 2px rgba(118, 169, 250, 0.18);
+}
+.approval-banner { margin: 0 0 12px; padding: 10px 12px; border-radius: 10px; font-size: 12px; line-height: 1.5; }
+.approval-banner[hidden] { display: none; }
+.approval-banner.warning { border: 1px solid #6b5420; background: #2a2110; color: #f3d48a; }
+.approval-banner.error { border: 1px solid #6b2a33; background: #2a1116; color: #ffb4bd; }
+.approval-actions { display: flex; gap: 10px; margin-top: 20px; }
+.approval-actions button { flex: 1; padding: 12px 10px; font-size: 12px; }
+.approval-actions button:disabled { opacity: .55; cursor: default; }
+.approval-actions .approval-no { border: 1px solid #6b2a33; background: #2a1b24; color: #ffb4bd; }
+.approval-actions .approval-no:hover { background: #3a2230; }
+.approval-actions .approval-edit { border: 1px solid #405a7b; background: #17263b; color: #c5d9f7; }
+.approval-actions .approval-edit:hover { background: #243a56; }
+
+/* ---------- Stop button (replaces Send while GLACIER is working) ---------- */
+.stop-button {
+    background: linear-gradient(135deg, #f0707e, #d9475c);
+    color: #fff;
+    box-shadow: 0 6px 20px rgba(240, 112, 126, 0.25);
+}
+.stop-button:hover { background: linear-gradient(135deg, #ff8793, #e5566b); }
+.stop-button[hidden] { display: none; }
+.input-area.busy #sendButton { display: none; }
+/* ---------- Dataset viewer: Reload button ---------- */
+.dataset-viewer-side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    flex-shrink: 0;
+}
+.dataset-reload-button {
+    padding: 8px 14px;
+    font-size: 12px;
+    border: 1px solid #405a7b;
+    background: #17263b;
+    color: #c5d9f7;
+}
+.dataset-reload-button:hover { background: #243a56; }
+.dataset-reload-button:disabled { opacity: 0.55; cursor: wait; }
+@media (max-width: 760px) {
+    .dataset-viewer-side { align-items: flex-start; }
+}
+
+/* ---------- Dataset viewer: row numbers (#) ---------- */
+#datasetTable th.row-index,
+#datasetTable td.row-index {
+    position: sticky;
+    left: 0;
+    width: 1%;
+    min-width: 56px;
+    text-align: right;
+    color: #7f93ae;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    background-color: #101827;      /* solid, so scrolling columns never show through */
+}
+#datasetTable th.row-index { z-index: 3; background-color: #1c2a3d; color: #b9d8ff; }
+#datasetTable td.row-index { z-index: 2; }
+#datasetTable tbody tr:nth-child(even) td.row-index { background-color: #172234; }
+#datasetTable tbody tr:hover td.row-index { background-color: #203149; }

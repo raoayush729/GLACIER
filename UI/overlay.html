@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: transparent;
+            user-select: none;
+        }
+
+        body {
+            display: grid;
+            place-items: center;
+        }
+
+        #glacierOrb {
+            width: 70px;
+            height: 70px;
+            padding: 0;
+            border-radius: 50%;
+
+            display: grid;
+            place-items: center;
+
+            background: radial-gradient(
+                circle at 35% 28%,
+                #b4d4ff,
+                #6599e8 58%,
+                #254a7c
+            );
+
+            border: 2px solid rgba(180, 215, 255, 0.9);
+            color: #07111f;
+
+            font-family: "Segoe UI", Arial, sans-serif;
+            font-size: 29px;
+            font-weight: 800;
+
+            box-shadow:
+                0 0 12px rgba(70, 130, 220, 0.15),
+                inset 0 0 12px rgba(255, 255, 255, 0.2);
+
+            cursor: grab;
+
+            transform: translateX(45px);
+
+            transition:
+                transform 280ms cubic-bezier(.2, .8, .2, 1),
+                box-shadow 220ms ease,
+                border-color 220ms ease;
+
+            -webkit-app-region: no-drag;
+            touch-action: none;
+        }
+
+        /* Half of the orb remains visible on the right edge. */
+        #glacierOrb.edge-right:not(.listening) {
+            transform: translateX(45px);
+        }
+
+        /* Half of the orb remains visible on the left edge. */
+        #glacierOrb.edge-left:not(.listening) {
+            transform: translateX(-45px);
+        }
+
+        /* Half of the orb remains visible on the top edge. */
+        #glacierOrb.edge-top:not(.listening) {
+            transform: translateY(-45px);
+        }
+
+        /* Half of the orb remains visible on the bottom edge. */
+        #glacierOrb.edge-bottom:not(.listening) {
+            transform: translateY(45px);
+        }
+
+        /* Reveal the full orb while listening. */
+        #glacierOrb.listening {
+            transform: translateX(0);
+
+            box-shadow:
+                0 0 14px 3px rgba(94, 160, 255, 0.65),
+                0 0 32px 9px rgba(65, 125, 230, 0.4),
+                inset 0 0 14px rgba(255, 255, 255, 0.28);
+        }
+
+        #glacierOrb.listening.glowing {
+            animation: glacierGlow 1s ease-in-out infinite alternate;
+        }
+
+        #glacierOrb.dragging {
+            cursor: grabbing;
+            transform: translateX(0) !important; /* show the full orb while dragging */
+            animation: none;
+            transition: none;
+        }
+
+        #glacierOrb:focus-visible {
+            outline: 2px solid #ffffff;
+            outline-offset: 3px;
+        }
+
+        @keyframes glacierGlow {
+            from {
+                box-shadow:
+                    0 0 12px 3px rgba(94, 160, 255, .5),
+                    0 0 25px 6px rgba(65, 125, 230, .3),
+                    inset 0 0 12px rgba(255, 255, 255, .2);
+
+                border-color: rgba(180, 215, 255, .8);
+            }
+
+            to {
+                box-shadow:
+                    0 0 20px 6px rgba(110, 180, 255, .95),
+                    0 0 42px 14px rgba(65, 125, 230, .6),
+                    inset 0 0 17px rgba(255, 255, 255, .4);
+
+                border-color: rgba(225, 240, 255, 1);
+            }
+        }
+
+        /* ---- Voice modes ---- */
+        body { display: flex; flex-direction: column; align-items: center; }
+        .orb-cell { width: 90px; height: 90px; flex: none; display: grid; place-items: center; }
+
+        #glacierOrb { position: relative; }
+        #glacierOrb::before {
+            content: ""; position: absolute; inset: -4px; border-radius: 50%;
+            z-index: -1; opacity: 0; filter: blur(4px);
+            background: conic-gradient(#3b82f6, #a855f7, #ec4899, #3b82f6);
+            animation: orbSpin 3s linear infinite; transition: opacity 250ms;
+        }
+        #glacierOrb.listening::before { opacity: .55; }
+        @keyframes orbSpin { to { transform: rotate(360deg); } }
+
+        /* New logo: shown only in stable mode (hidden while listening, as before). */
+        #glacierOrb .g {
+            position: absolute; inset: 0; width: 100%; height: 100%;
+            border-radius: 50%; object-fit: cover; pointer-events: none;
+        }
+
+        .mic { display: none; width: 30px; height: 30px; }
+        #glacierOrb.listening .g { display: none; }
+        #glacierOrb.listening .mic { display: block; }
+
+        #statusLabel {
+            height: 36px; display: flex; align-items: center; justify-content: center; gap: 6px;
+            color: #cfe2ff; font: 600 10px "Segoe UI", Arial, sans-serif; letter-spacing: 2px;
+            text-shadow: 0 0 8px rgba(94, 160, 255, .8); opacity: 0; transition: opacity 200ms;
+        }
+        body.active #statusLabel { opacity: 1; }
+
+        .dots { display: none; gap: 3px; }
+        .dots i {
+            width: 4px; height: 4px; border-radius: 50%; background: #9bc4ff;
+            animation: dotBounce .8s ease-in-out infinite;
+        }
+        .dots i:nth-child(2) { animation-delay: .12s; }
+        .dots i:nth-child(3) { animation-delay: .24s; }
+        body.thinking .dots { display: inline-flex; }
+        @keyframes dotBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+        /* Keep the orb in place when the window grows to give the glow room. */
+        body.active { padding-top: 56px; }
+    </style>
+</head>
+
+<body>
+    <div class="orb-cell">
+        <button id="glacierOrb" type="button" aria-label="Open GLACIER">
+            <img class="g" src="logo.png" alt="" draggable="false">
+            <svg class="mic" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round">
+                <rect x="9" y="3" width="6" height="11" rx="3" fill="#fff"/>
+                <path d="M5 11a7 7 0 0 0 14 0M12 18v3M8 21h8"/>
+            </svg>
+        </button>
+    </div>
+    <div id="statusLabel">
+        <span id="labelText">LISTENING</span>
+        <span class="dots"><i></i><i></i><i></i></span>
+    </div>
+
+    <script>
+        const orb = document.getElementById("glacierOrb");
+
+        let pointerId = null;
+        let dragging = false;
+        let moved = false;
+        let startX = 0;
+        let startY = 0;
+
+        const dragThreshold = 5;
+
+        // Press the orb: tell Electron where the drag started.
+        orb.addEventListener("pointerdown", (event) => {
+            if (event.button !== 0 || pointerId !== null) {
+                return;
+            }
+
+            event.preventDefault();
+
+            pointerId = event.pointerId;
+            dragging = true;
+            moved = false;
+
+            startX = event.screenX;
+            startY = event.screenY;
+
+            orb.setPointerCapture(event.pointerId);
+            window.glacierOverlay?.dragStart();
+        });
+
+        // Move the mouse: after a small threshold, the window follows the cursor.
+        orb.addEventListener("pointermove", (event) => {
+            if (!dragging || event.pointerId !== pointerId) {
+                return;
+            }
+
+            if (!moved) {
+                const dx = event.screenX - startX;
+                const dy = event.screenY - startY;
+
+                if (
+                    Math.abs(dx) <= dragThreshold &&
+                    Math.abs(dy) <= dragThreshold
+                ) {
+                    return;
+                }
+
+                moved = true;
+                orb.classList.add("dragging");
+            }
+
+            window.glacierOverlay?.dragMove();
+        });
+
+        // Release: snap to the nearest edge, or open chat if it was just a click.
+        function finishPointer(event) {
+            if (!dragging || event.pointerId !== pointerId) {
+                return;
+            }
+
+            const wasMoved = moved;
+
+            dragging = false;
+            pointerId = null;
+            moved = false;
+
+            orb.classList.remove("dragging");
+
+            if (wasMoved) {
+                window.glacierOverlay?.finishMove();
+            } else if (event.type === "pointerup") {
+                window.glacierOverlay?.openChat();
+            }
+        }
+
+        orb.addEventListener("pointerup", finishPointer);
+        orb.addEventListener("pointercancel", finishPointer);
+
+        // Update the orb when the voice state changes.
+        window.addEventListener("glacier-voice-state", (event) => {
+            const listening = Boolean(event.detail?.listening);
+
+            orb.classList.toggle("listening", listening);
+            orb.classList.toggle("glowing", listening);
+        });
+
+        // React to the voice mode sent by the main process.
+        const labels = { listening: "LISTENING", executing: "THINKING", responding: "SPEAKING" };
+
+        window.glacierOverlay?.onModeChange((mode) => {
+            const active = mode !== "stable";
+
+            orb.classList.toggle("listening", active);
+            orb.classList.toggle("glowing", active);
+            document.body.classList.toggle("active", active);
+            document.body.classList.toggle("thinking", mode === "executing");
+
+            if (active) {
+                document.getElementById("labelText").textContent = labels[mode] || "";
+            }
+        });
+
+        // Update the orb's attached screen edge.
+        if (window.glacierOverlay) {
+            window.glacierOverlay.onEdgeChange((edge) => {
+                orb.classList.toggle("edge-left", edge === "left");
+                orb.classList.toggle("edge-right", edge === "right");
+                orb.classList.toggle("edge-top", edge === "top");
+                orb.classList.toggle("edge-bottom", edge === "bottom");
+            });
+        }
+    
+</script>
+</body>
+</html>

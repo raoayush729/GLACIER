@@ -1,0 +1,955 @@
+----------------------------------STEPS FOR DATA Cleaning
+A. Missing values
+    Rating
+    4.5
+    NaN
+    4.0
+    NaN
+    5.0
+
+B. Duplicate rows
+    Product A    100
+    Product B    200
+    Product A    100
+
+C. Wrong data types
+    Rating
+
+    "4.5"
+    "4.0"
+    "5.0"
+    
+D. Messy text
+    "4.6 out of 5 stars"
+    "4.0"
+    "5 stars"
+    "3.5 out of 5 stars"
+
+E. Inconsistent categories
+    "Yes"
+    "yes"
+    "YES"
+    " y "
+
+F. Wrong formatting
+    ₹1,299
+    1,299
+    1299
+    ₹1299
+
+G. Incorrect values / outliers
+    Age
+    21
+    22
+    25
+    24
+    250
+    23
+
+H. Date problems
+    01/02/2026
+    2026-02-01
+    Feb 1, 2026
+
+
+
+
+===========================================================Statistics===========================================================
+
+skewness 
+|        Skewness | Rough interpretation          |
+| --------------: | ----------------------------- |
+|    Around **0** | Almost symmetric              |
+|     **0 to +1** | Mild right skew               |
+|    **+1 to +2** | Noticeable right skew         |
+|        **> +2** | Strong right skew             |
+|       **24.49** | 🚨 **Extremely right-skewed** |
+| Negative values | Left-skewed                   |
+
+
+
+
+what is kurtosis?
+
+Kurtosis is a statistical measure that tells us how much the data is concentrated in the tails — especially how likely we are to see extreme values/outliers compared with a normal distribution.
+Think of a dataset as having:
+Center → normal/typical values
+Tails → unusually low and unusually high values
+
+
+####  Kurtosis mainly helps us understand how heavy or light those tails are.  ###
+
+
+Simple example
+Imagine these two datasets:
+Dataset A:
+10  11  12  13  14  15  16
+Dataset B:
+10  11  12  13  14  15  100
+Dataset B has an extreme value 100.
+That extreme value contributes to heavy tails, so its kurtosis will be much higher.
+
+
+
+
+----Coveriance - 
+-describes how much 2 variable change together 
+-it gives direction (not the strenght of the relationship)
+
+positive covariance:
+var1(incease/decrease), var2(increase)
+
+negetive covariance:
+var1(increase/decrease), var2(decrease)
+
+Negative covariance     → variables tend to move opposite
+        ↓
+       c < 0
+
+Zero covariance         → no linear relationship
+        ↓
+       c = 0
+
+Positive covariance     → variables tend to move together
+        ↓
+       c > 0
+
+
+----correlation
+-describes the strength between 2 variables 
+-linear relation
+-it can also give direction of the relationship, negative, positive or no relation
+
+
+                 CORRELATION SCALE
+
+Negative relation                                  Positive relation
+      -1                    0                           +1
+       |--------------------|----------------------------|
+       |                    |                            |
+    closer to            0  = no relation             closer to
+    -1= strong                                        +1 = strong
+    negative                                             positive
+    relation                                             relation
+
+
+- Value closer to -1 → stronger negative relationship
+- Value closer to 0  → weaker/no linear relationship
+- Value = 0          → no linear relationship
+- Value closer to +1 → stronger positive relationship
+- Value = -1         → perfect negative relationship
+- Value = +1         → perfect positive relationship    
+- value = -0.5<v<0.5 → no linear relationship/very weak relation
+
+
+
+----Causation
+- relationship between casue & effect
+- causation checks that does changes in one variable affect the other ?
+
+
+
+Whats a p-value?
+
+A p-value tells us how unusual our result is if H₀ (null hypothesis) is actually true.
+
+"If H₀ were true, how likely is it that I would get a result this extreme?"
+
+For example:
+
+p-value = 0.20
+
+means roughly:
+
+If H₀ is true, results this extreme are not particularly unusual.
+
+But:
+
+p-value = 0.01
+
+means:
+
+If H₀ is true, getting a result this extreme would be quite unusual.
+
+
+
+Z-SCORE
+↓
+Measures how far the result is from the hypothesized mean.
+
+SIGNIFICANCE LEVEL
+↓
+Sets how strict we are when deciding whether that result is unusual enough.
+
+P-VALUE
+↓
+Tells us how unusual the result actually is under H₀.
+
+
+
+
+Norm ppf(normal distribution , percent point fucntion)
+norm cdf(normal distribution,)
+
+if we write:
+
+norm.cdf(1.96)
+
+what we gave to python:
+
+Z-score = 1.96
+
+and python will give us:
+
+Probability ≈ 0.975
+
+So:
+
+Z-score → Probability
+
+now reverse:
+
+norm.ppf(0.975)
+
+what we gave to python:
+
+Probability = 0.975
+
+and python will give us:
+
+Z-score ≈ 1.96
+
+So:
+
+Probability → Z-score
+
+
+CDF → Z-score do → probability batao
+
+PPF → probability do → Z-score batao
+
+
+
+
+
+
+
+
+
+
+ANOVA -
+its a statistical analysis or method used to compare the means of 2 or more group within each other 
+
+Factors-  These are the major subject like medicines
+levels-  these are the levels of major subject like 10mg, 15mg, 20mg 
+
+Assumtions in Anova:-
+1 normality of sample distribution mean - the distribution of sample mean is normally distributed 
+2 absence of outlier - outliers needs to be removed from the dataset
+3 homogenity of variance - each one of the population has same variance, population variacnce in different levels of each indepenedent are equal
+4 samples are indepenedent and random 
+These needs to be satisfied before doing an anova test 
+
+Types of anova 
+1 one way anova - one factor with atleast 2 levels (indepenedent)
+eg - doctor wants to test a new medication to decrease headache
+    they split the participants in 3 conditions[10mg,20mg,30mg]
+    doctor asks the participant to rate the headache[1-10]
+
+            medication = factor
+            levels = [10mg,20mg,30mg]   
+
+the mgs are indepenedent there value are not affected by any other levels
+
+2 two way anova (repaeted measures anova) - one factor with atleast two levels (dependent)
+Eg:                    
+                Running = factor
+        levels = day1      day2      day3 
+                  8         5         7
+                  7         4         3
+
+here in the running it is possible that runner's covering distance is less and less day by day like 7 - 4 - 3
+so thers is some dependency because of day1 2 and 3
+
+
+
+3 factorial anova - 2 or more factors each of which with atleast 2 levels (can be independent or dependent)
+Eg: 
+                        Running = factor 
+                        day1    day2    day3    
+                men      8       5       6
+gender = factor
+              women      6       3       2
+
+
+Anova uses F distribution 
+
+Ho = μ1, μ2, μ3, μ4 .... 
+H1 = atleast one of the mean is not equal to others (μ1 != μ2 != μ3 != μ ....)
+
+formula -
+F statistics/f_score/f = variance between sample / variance within sample
+
+                X1      X2      X3
+                1       6       2
+                2       7       9
+                3       5       4
+                5       8       2
+                4       2       6
+             _______ ________ ______
+              x = 3   x=19/5   x = 4
+
+
+
+
+
+
+if we check the variane inside a single column/sample it is called variance within sample eg. X1
+
+if we check the variance between the multiple sample it is called variance between sample eg. X1,X2,X3
+
+
+ANVOVA TESTS STEPS :
+
+
+    # Step 1 → H0 and H1
+
+
+    # Step 2 → N = total rows * total columns,
+    #          n = total rows, 
+    #          a = total column(levels), 
+    #          α = significance level
+
+
+    # Step 3 → degrees of freedom 
+    #          df between = a-1
+    #          df within = N-a
+
+
+    # Step 4 → TOtal Degree of freedom = N - 1
+
+
+    # Step 5 → F critical value  = F distribution table (df between(column), df within(row))
+
+
+    # Step 6 → SS between = summation of all squared values in every column(levels) saparted by column(levels) / n - summation of all values in every column(levels) saparated by column(levels) / N 
+    #          SS within  = summation of the whole sample values squared of all columns(levels) - summation of all squared values in every column(levels) saparted by column(levels) / n
+
+
+    # Step 7 → MS between = ss between / df between 
+    #          MS within = ss within / df within
+
+
+    # Step 8 → F statistic = varance between sample / variance within sample = MS between / MS within
+
+
+    # Step 9 → Decision  = if the F statistics is greater than critical value then we reject the null hypothesis otherwise fail to reject 
+
+
+
+
+
+
+Chi square -
+In statistics, the Chi-Square (χ²) Test is a hypothesis test used to determine whether there is a significant difference
+between observed frequencies and expected frequencies.
+chi square is for categorical data 
+chi square can be used on 2 colums or many categorical at a time
+
+steps -
+    # 1. H₀ / H₁
+    # 2. α
+    # 3. df = (rows - 1)(columns - 1)
+    # 4. O = observed frequency
+    # 5. E = expected frequency
+    # 6. Calculate χ² = Σ((O-E)²/E)
+    # 7. Find critical value
+    # 8. Compare χ² with critical value
+    # 9. Decision if χ² is greater than cv = reject Ho
+
+
+
+     observed = pd.crosstab(df[column1], df[column2])        # pd.crosstab() — a Pandas function used to create a frequency table showing how often combinations of values from two categorical variables occur.
+        # this bascially stores a table like 
+        # Number_of_reviews
+        #                 375  2457  3044  35882  ...
+        # Rating
+        # 4.0               0     0     0      0    ...
+        # 4.2               0     0     0      0    ...
+        # 4.3               0     1     0      0    ...
+        # 4.4               0     0     0      0    ...
+        # 4.5               0     0     0      0    ...
+        # 4.6               1     0     1      1    ...
+        # 4.7               0     0     0      0    ...
+        # 4.8               0     0     0      0    ...   - inside observed
+        # - how many times the rating occurs respective to number of reviews ?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if __name__ == "__main__":
+
+It basically means:
+
+"Only run the code below this line if this Python file is being run directly."
+
+That's it.
+
+Example
+
+Suppose export_manager.py contains:
+
+class ExportManager:
+    ...
+    
+
+if __name__ == "__main__":
+    print("Testing ExportManager")
+
+If you run:
+
+python export_manager.py
+
+Python says:
+
+I am running export_manager.py directly
+        ↓
+__name__ == "__main__"
+        ↓
+YES
+        ↓
+Run the testing code
+
+So:
+
+Testing ExportManager
+
+gets printed.
+
+But what if another file imports it?
+
+For example:
+
+from export_manager import ExportManager
+
+Now export_manager.py is not being run directly.
+
+It's being imported by another Python file.
+
+Therefore:
+
+if __name__ == "__main__":
+
+is false.
+
+The testing code underneath it doesn't execute.
+
+But the class still gets imported.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#===========================================================================================================================
+#                                               PySide6 Library
+#===========================================================================================================================
+
+
+
+1. QApplication — Runs the GUI application
+It sets up the application and manages GUI events, such as clicks, scrolling, and window interactions. 
+It does not create the window's contents.
+app = QApplication(sys.argv)
+
+
+2. QWidget — Creates the main window
+This is the container where we place the dataset information and table.
+window = QWidget()
+window.setWindowTitle("Glacier")
+window.resize(1200, 750)
+By itself, the window is empty.
+
+
+3. QVBoxLayout — Arranges the contents
+Places the information label above the data table.
+layout = QVBoxLayout(window)
+layout.addWidget(info)
+layout.addWidget(table)
+
+
+4. QLabel — Displays dataset information
+Shows the file name, path, type, shape, and last operation at the top.
+info = QLabel("Dataset information")
+
+
+5. QTableView — Displays the spreadsheet-like table
+Provides the visible rows, columns, scrolling, and table area. It needs a model to supply the actual cell data.
+table = QTableView()
+table.setModel(model)
+
+
+6. QHeaderView — Controls the table headers
+Lets us configure how column headers behave, including manually resizing columns.
+table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Interactive)
+
+
+7. QAbstractTableModel — Connects our data to the table
+We inherit from this class to build our own TableModel, which tells the table how many rows and columns exist and what value belongs in each cell.
+class TableModel(QAbstractTableModel):
+    ...
+This is the base class; it isn't the visible table.
+
+
+8. Qt — Provides ready-made GUI settings
+Used to specify things like what data to display and whether label text can be selected with the mouse.
+Qt.ItemDataRole.DisplayRole
+
+
+
+
+
+---------------------------------------------How all these pieces work together
+
+QApplication
+
+Manages the application
+
+QWidget — Main window
+QVBoxLayout — Arranges everything
+QLabel
+
+Dataset details
+
+QTableView
+
+Visible table
+
+
+QHeaderView controls the headers
+
+
+The table gets its data from our TableModel, built using QAbstractTableModel.
+
+
+
+Important: 
+QTableView displays the table, but the TableModel tells it what data to display. 
+QApplication manages the overall GUI, while QWidget provides the window itself.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+alright then now theres only the testing remains for the glacier 
+this is final testing and after this succeds the glacier project will be complete 
+we can create the executable file then 
+so lets do this 
+here are all the methods defined in our tool we will test more than 100 cases to make sure glacier returns something every time and not an error on any situation possible 
+{
+    "data_cleaning": {
+        "id": "data_cleaning",
+        "methods": {
+            "inspect_dataset": {
+                "purpose": "Inspect the active dataset's structure, dimensions, data types, missing values, and duplicates.",
+                "parameters": []
+            },
+            "analyze_missing_values": {
+                "purpose": "Calculate missing-value counts and percentages for every column.",
+                "parameters": []
+            },
+            "analyze_duplicates": {
+                "purpose": "Calculate the number and percentage of duplicate rows.",
+                "parameters": []
+            },
+            "analyze_datatypes": {
+                "purpose": "Analyze each column's data type, unique values, and missing values.",
+                "parameters": []
+            },
+            "analyze_numeric_columns": {
+                "purpose": "Measure how many non-missing values in each column can be converted to numeric values.",
+                "parameters": []
+            },
+            "decide_missing_value_strategy": {
+                "purpose": "Assign an initial missing-value handling strategy to each column.",
+                "parameters": []
+            },
+            "inspect_problematic_values": {
+                "purpose": "Print sample values to help identify problematic data.",
+                "parameters": []
+            },
+            "remove_duplicates": {
+                "purpose": "Remove duplicate rows and update the active dataset.",
+                "parameters": []
+            },
+            "prepare_missing_value_analysis": {
+                "purpose": "Return missing-value counts for columns containing missing values.",
+                "parameters": []
+            },
+            "inspect_missing_value_columns": {
+                "purpose": "Inspect columns with missing values and display sample non-missing values.",
+                "parameters": []
+            },
+            "clean_numeric_column": {
+                "purpose": "Clean numeric-looking values and convert them into numeric data.",
+                "parameters": [
+                    "column"
+                ]
+            },
+            "clean_abbreviated_numbers": {
+                "purpose": "Convert abbreviated numeric values into numeric values.",
+                "parameters": [
+                    "column"
+                ]
+            },
+            "clean_boolean_column": {
+                "purpose": "Convert values to True, False, or None using supplied mappings.",
+                "parameters": [
+                    "column",
+                    "true_values",
+                    "false_values"
+                ]
+            },
+            "handle_missing_values": {
+                "purpose": "Drop rows containing missing values in a selected column or fill them with Unknown.",
+                "parameters": [
+                    "column",
+                    "action"
+                ]
+            },
+            "clean_text_column": {
+                "purpose": "Convert a column to strings and remove leading and trailing whitespace.",
+                "parameters": [
+                    "column"
+                ]
+            },
+            "convert_to_numeric": {
+                "purpose": "Convert a column to numeric values, replacing unconvertible values with NaN.",
+                "parameters": [
+                    "column"
+                ]
+            },
+            "validate_cleaning": {
+                "purpose": "Validate the dataset after cleaning.",
+                "parameters": []
+            },
+            "final_cleaning_report": {
+                "purpose": "Display a final report summarizing the cleaning status.",
+                "parameters": []
+            }
+        }
+    },
+
+    "dataset_management": {
+        "id": "dataset_management",
+        "methods": {
+            "load_dataset": {
+                "purpose": "Load a dataset from a validated file path. If the user gives a full path, use that exact path. If the user gives only a filename, use the file in C:\\Users\\ayush\\OneDrive\\Desktop by default. Never assume the GLACIER project data folder is the default.",
+                "parameters": [
+                    "file_path"
+                ]
+            },
+            "show_active_dataset": {
+                "purpose": "Show the currently active dataset's name, path, file type, shape, and last operation.",
+                "parameters": []
+            }
+        }
+    },
+
+    "export_manager": {
+        "id": "export_manager",
+        "methods": {
+            "export_csv": {
+                "purpose": "Export the currently active Pandas DataFrame to a CSV file at the specified file path.",
+                "parameters": [
+                    "file_path"
+                ]
+            },
+            "export_excel": {
+                "purpose": "Export the currently active Pandas DataFrame to an Excel file at the specified file path.",
+                "parameters": [
+                    "file_path"
+                ]
+            },
+            "SQL_Quaries": {
+                "purpose": "Execute a SQL query against MySQL and return query results or execution status.",
+                "parameters": [
+                    "Host",
+                    "User",
+                    "Password",
+                    "quary",
+                    "Database"
+                ]
+            },
+            "Export_to_SQL": {
+                "purpose": "Export the active Pandas DataFrame into a new table in an existing MySQL database.",
+                "parameters": [
+                    "Host",
+                    "User",
+                    "Password",
+                    "Database_name",
+                    "Table_name"
+                ]
+            },
+            "create_database": {
+                "purpose": "Create a MySQL database if it does not already exist.",
+                "parameters": [
+                    "Host",
+                    "User",
+                    "Password",
+                    "Database_name"
+                ]
+            }
+        }
+    },
+    
+    "file_access": {
+        "id": "file_access",
+        "methods": {
+            "check_path": {
+                "purpose": "Check whether a specified file or directory path exists.",
+                "parameters": [
+                    "path"
+                ]
+            },
+            "identify_path": {
+                "purpose": "Identify whether a path points to a file, directory, or nonexistent location.",
+                "parameters": [
+                    "path"
+                ]
+            },
+            "list_items": {
+                "purpose": "List files and subdirectories inside a specified directory.",
+                "parameters": [
+                    "path"
+                ]
+            },
+            "get_file_type": {
+                "purpose": "Return the lowercase file extension of a valid file.",
+                "parameters": [
+                    "file_path"
+                ]
+            },
+            "search_file": {
+                "purpose": "PRIMARY FILE SEARCH METHOD. Use this method when the user asks to find, search for, locate, or identify a file by its filename or keywords, including requests such as finding a sales file on the Desktop. Searches recursively inside the directory provided through directory_path and filters supported CSV, Excel, and JSON files. If the user specifies a recognized folder such as Desktop, use this method to find the requested file; resolving the folder path is a supporting step, not the final goal. Requires directory_path and file_name.",
+                "parameters": [
+                    "directory_path",
+                    "file_name"
+                ]
+            },
+            "get_location": {
+                "purpose": "FOLDER LOCATION LOOKUP ONLY. Use this method when the user asks where a recognized folder such as Desktop, Downloads, Documents, Pictures, or Videos is located, or explicitly asks for its filesystem path. Returns the folder path. Do not use this method as the final action when the user asks to find a specific file inside that folder and search_file is available.",
+                "parameters": [
+                    "location_name"
+                ]
+            },
+            "get_path": {
+                "purpose": "Validate a path and return it as a Path object if it exists.",
+                "parameters": [
+                    "path"
+                ]
+            },
+            "get_file_info": {
+                "purpose": "Return a file's name, path, extension, and parent directory.",
+                "parameters": [
+                    "file_path"
+                ]
+            }
+        }
+    },
+    "python_executioner": {
+        "id": "python_executioner",
+        "methods": {
+            "execute": {
+                "purpose": "Execute Python expressions or statements in a persistent namespace and capture their output or errors. This is GLACIER's primary, high-priority execution tool and should generally be preferred for Python operations when appropriate, while still allowing specialist tools to handle tasks better suited to them.",
+                "parameters": [
+                    "code"
+                ]
+            }
+        }
+    },
+    "statistics": {
+        "id": "statistics",
+        "methods": {
+            "inspect_statistical_data": {
+                "purpose": "Inspect the active dataset's columns, data types, missing values, unique values, and numeric-column status before statistical analysis.",
+                "parameters": []
+            },
+            "calculate_descriptive_stats": {
+                "purpose": "Calculate descriptive statistics for eligible numeric columns, including mean, median, mode, minimum, maximum, range, standard deviation, variance, quartiles, and IQR.",
+                "parameters": []
+            },
+            "analyze_distribution": {
+                "purpose": "Analyze the distribution of eligible numeric columns by calculating skewness and kurtosis.",
+                "parameters": []
+            },
+            "analyze_outliers": {
+                "purpose": "Identify potential outliers in numeric columns using the IQR method and report quartiles, IQR, lower and upper boundaries, outlier counts, and outlier percentages without automatically deleting observations.",
+                "parameters": []
+            },
+            "analyze_correlation": {
+                "purpose": "Calculate the correlation between two eligible numeric columns to measure the direction and strength of their linear relationship.",
+                "parameters": [
+                    "col1",
+                    "col2"
+                ]
+            },
+            "analyze_covariance": {
+                "purpose": "Calculate the covariance between two eligible numeric columns to describe how their values vary together.",
+                "parameters": [
+                    "col1",
+                    "col2"
+                ]
+            },
+            "z_two_tailed_test": {
+                "purpose": "Perform a two-tailed z-test using a dataset column, hypothesized population mean, and significance level. Return the z-score, critical value, and hypothesis-test decision.",
+                "parameters": [
+                    "column",
+                    "population_mean",
+                    "significance_level"
+                ]
+            },
+            "z_one_tailed_test": {
+                "purpose": "Perform a left-tailed or right-tailed z-test using a dataset column, direction, hypothesized population mean, and significance level. Return the z-score, critical value, p-value,"
+            }
+        }
+    },
+    "visualisation": {
+        "id": "visualisation",
+        "methods": {
+            "bar_chart": {
+                "purpose": "Create a bar chart to compare values across categories using the selected x and y columns from the active dataset.",
+                "parameters": [
+                    "x",
+                    "y"
+                ]
+            },
+            "line_chart": {
+                "purpose": "Create a line chart to visualize how a numeric variable changes across the values or order of another column.",
+                "parameters": [
+                    "x",
+                    "y"
+                ]
+            },
+            "scatter_plot": {
+                "purpose": "Create a scatter plot to visualize the relationship between two selected columns and identify possible patterns or associations.",
+                "parameters": [
+                    "x",
+                    "y"
+                ]
+            },
+            "histogram": {
+                "purpose": "Create a histogram to visualize the frequency distribution of values in a selected dataset column.",
+                "parameters": [
+                    "column"
+                ]
+            },
+            "box_plot": {
+                "purpose": "Create a box plot to visualize the spread, quartiles, median, and potential outliers of a selected dataset column.",
+                "parameters": [
+                    "column"
+                ]
+            },
+            "density_plot": {
+                "purpose": "Create a kernel density estimation (KDE) plot to visualize the smooth distribution shape of a selected dataset column.",
+                "parameters": [
+                    "column"
+                ]
+            },
+            "count_plot": {
+                "purpose": "Create a count plot to display the frequency of each category or value in a selected dataset column.",
+                "parameters": [
+                    "column"
+                ]
+            },
+            "joint_plot": {
+                "purpose": "Create a joint plot to visualize the relationship between two selected columns alongside their individual distributions.",
+                "parameters": [
+                    "x",
+                    "y"
+                ]
+            },
+            "pair_plot": {
+                "purpose": "Create a pair plot for numeric columns to visualize pairwise relationships and individual distributions across multiple variables.",
+                "parameters": []
+            }
+        }
+    }
+}
+for this backend testing im not running the whole app i would like to test the backend part only so that means the brain.py 
+and the tests should include the full debug of all these methods 
+
+
+
+
+
+
+
+
+
+
+,
+                            "example": "C:\\Users\\ayush\\OneDrive\\Desktop"

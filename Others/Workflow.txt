@@ -1,0 +1,353 @@
+--------------------------------------PHASE 0 → Foundation
+
+GLACIER/
+├── README.md
+├── requirements.txt
+├── .gitignore
+├── main.py
+├── core/
+├── skills/
+├── agents/
+├── tools/
+├── ui/
+└── data/
+
+
+--------------------------------------PHASE 1 → Laptop & File Access
+
+User Request
+      ↓
+File Access System
+      ↓
+Understand location: Desktop
+      ↓
+Search directory
+      ↓
+Find possible files
+      ↓
+Identify file type
+      ↓
+Return file path
+
+
+--------------------------------------PHASE 2 → Python Execution
+
+User / Agent Request
+        ↓
+Python Executor
+        ↓
+Runs Python operation
+        ↓
+Python Libraries
+        ↓
+Result
+        ↓
+GLACIER receives result
+
+
+--------------------------------------PHASE 3 → Dataset Management
+
+You:
+Glacier, load sales.csv from Desktop.
+
+GLACIER:
+Dataset loaded successfully.
+
+You:
+Check for missing values.
+
+GLACIER knows:
+"Check the currently active dataset."
+
+We create the concept of:
+
+ACTIVE DATASET
+
+GLACIER should track:
+
+Original file
+Current working dataset
+File path
+File type
+Cleaned version
+Last operation
+
+
+--------------------------------------PHASE 4 → Data Cleaning
+
+Capabilities:
+
+Inspect dataset
+Check shape
+Check data types
+Find missing values
+Handle missing values
+Find duplicates
+Remove duplicates
+Fix basic data types
+Clean column names
+Handle whitespace
+Identify obvious invalid values
+Save cleaned dataset
+
+The flow:
+
+Dataset
+   ↓
+Inspection
+   ↓
+Identify Problems
+   ↓
+Choose Cleaning Operations
+   ↓
+Execute
+   ↓
+Verify
+   ↓
+Save Cleaned Dataset
+
+
+--------------------------------------PHASE 5 → Statistics
+
+Mean
+Median
+Mode
+Standard Deviation
+Variance
+Skewness
+Correlation
+
+Z-Test
+T-Test
+One-tailed
+Two-tailed
+
+User asks question
+      ↓
+GLACIER identifies variables
+      ↓
+Checks available data
+      ↓
+Selects an appropriate supported test
+      ↓
+Runs test
+      ↓
+Returns:
+Statistic
+p-value
+Significance level
+Decision
+Conclusion
+--------------------------------------PHASE 6 → Visualization
+
+Bar chart
+Line chart
+Pie chart
+Histogram
+Scatter plot
+Box plot
+Heatmap
+Correlation matrix
+
+Active Dataset
+      ↓
+Identify category
+Identify sales
+      ↓
+Aggregate data
+      ↓
+Choose chart
+      ↓
+Generate visualization
+      ↓
+Show result
+--------------------------------------PHASE 7 → Export to SQL / Excel
+
+Cleaned Dataset
+       │
+       ├──→ CSV
+       │
+       ├──→ Excel
+       │
+       └──→ SQL Database
+
+Export dataset
+Choose filename
+Choose location
+Save
+It should connect to the MySQL database/server. 
+Workbench is basically the graphical application you use to look at and manage that database.
+Flow:
+
+STEP 1
+Understand:
+MySQL
+MySQL Server
+MySQL Workbench
+Database
+Table
+Column
+Row
+
+↓
+
+STEP 2
+Understand how Python communicates with MySQL
+
+↓
+
+STEP 3
+Set up MySQL locally
+
+↓
+
+STEP 4
+Connect Python → MySQL
+
+↓
+
+STEP 5
+Python creates a database/table
+
+↓
+
+STEP 6
+Send a tiny test DataFrame
+
+↓
+
+STEP 7
+Verify it in MySQL Workbench
+
+↓
+
+STEP 8
+Send your Amazon cleaned DataFrame
+
+↓
+
+STEP 9
+Build ExportManager
+
+↓
+
+STEP 10
+Make GLACIER open Workbench / Excel after export
+
+
+
+--------------------------------------PHASE 8 → LLM / AI Agent
+
+(Ollama)
+"Glacier, clean this dataset and prepare it for analysis."
+
+                USER COMMAND
+                     ↓
+                LLM / BRAIN
+                     ↓
+               CREATE PLAN
+                     ↓
+             SELECT TOOL/SKILL
+                     ↓
+               EXECUTE TOOL
+                     ↓
+                TOOL RESULT
+                     ↓
+             CHECK / REASON
+                ↙       ↘
+          Need more?    Done?
+              ↓           ↓
+          another tool   respond
+              ↓
+            result
+
+--------------------------------------PHASE 9 → UI + EXE + Startup
+
+PHASE 1   Inspect and protect existing project
+   ↓
+PHASE 2   Design frontend ↔ backend communication
+   ↓
+PHASE 3   Build Python API
+   ↓
+PHASE 4   Build Electron desktop shell
+   ↓
+PHASE 5   Connect frontend to Python
+   ↓
+PHASE 6   Build Action Output window
+   ↓
+PHASE 7   Complete the interface
+   ↓
+PHASE 8   Integrate existing GLACIER capabilities
+   ↓
+PHASE 9   Add laptop/application control
+   ↓
+PHASE 10  Integrate voice and wake word
+   ↓
+PHASE 11  Package, install, and launch
+
+
+
+
+
+THE UI connection :
+
+                 GLACIER DESKTOP APP
+                ┌─────────────────────┐
+                │   Electron Window   │
+                │                     │
+                │  Chat / Commands    │
+                │  Action Output      │
+                └──────────┬──────────┘
+                           │
+                    Local HTTP API
+                           │
+                ┌──────────▼──────────┐
+                │   Python Backend    │
+                │                     │
+                │    Brain()          │
+                │       │             │
+                │    Master_Mind()    │
+                │       │             │
+                │ Existing Python     │
+                │ Tools + Ollama      │
+                └─────────────────────┘
+
+
+
+
+
+
+
+Phase	        Task                   Priority
+1	🎙️ Voice commands	         Today
+2	🔊 Voice responses	        Today
+3	🖥️ Glacier Overlay	      After voice
+4	🧪 Testing and debugging  Today, then again tomorrow
+5	📦 Build the executable	       Tomorrow
+6	✅ Final packaged-app testing	Tomorrow
+
+
+
+
+
+Stage 1: Install sherpa-onnx
+          ↓
+Stage 2: Select a compatible keyword-spotting model
+          ↓
+Stage 3: Configure "Glacier" as the keyword
+          ↓
+Stage 4: Test keyword detection using audio samples
+          ↓
+Stage 5: Connect live microphone input
+          ↓
+Stage 6: Tune detection and reduce false activations
+          ↓
+Stage 7: Connect wake-word detection to GLACIER
+          ↓
+Stage 8: Capture commands and convert speech to text
+          ↓
+Stage 9: Send the text to your existing FastAPI backend
+          ↓
+Stage 10: Speak the response and test the complete workflow
+______________________________________________________________________________HOW MUCH WORK DONE____________________________________________________________________
+

@@ -1,0 +1,145 @@
+firstly download the ollama setup 
+
+then inside the terminal downloaded the qwen4:4b model which has 
+ ollama show qwen3:4b
+  Model
+    architecture        qwen3
+    parameters          4.0B
+    context length      262144
+    embedding length    2560
+    quantization        Q4_K_M
+
+  Capabilities
+    completion
+    tools
+    thinking
+        levels     true
+        default    true
+
+  Parameters
+    repeat_penalty    1
+    stop              "<|im_start|>"
+    stop              "<|im_end|>"
+    temperature       0.6
+    top_k             20
+    top_p             0.95
+
+  License
+    Apache License
+    Version 2.0, January 2004
+    ...
+
+
+---------------------------Some commands for qwen3 
+to run in terminal
+ollama run qwen3:4b 
+
+to close it in terminal
+/bye
+
+to switch to no thinking mode 
+/set nothink
+
+to switch to thinking mode 
+    /set think
+
+
+
+
+Most importantly for GLACIER:
+
+Capabilities
+    completion
+    tools
+    thinking
+
+That tools line is particularly important for our Phase 8 plan. 
+It means this model supports the kind of tool-calling behavior we'll eventually need for GLACIER. 
+Ollama also documents Qwen3 as a thinking-capable model
+
+
+
+
+
+
+
+
+
+
+============================================================================================================================
+
+.                                                   DEFINATIONS
+
+============================================================================================================================
+
+CHAT function of ollama
+response = ol.chat(
+    model="qwen3:4b",
+    messages=[
+        {
+            "role": "user",
+            "content": "Reply with only: YES"
+        }
+    ],
+    think=False
+)
+
+print("\nFULL RESPONSE:")
+print(response)
+
+print("\nMESSAGE:")
+print(response.message)
+
+print("\nCONTENT:")
+print(response.message.content)
+
+◇ response
+
+A Python object returned by Ollama after the model processes our request.
+
+It contains information about what the model generated and other response details.
+
+
+◇ message
+
+The part of the Ollama response containing the model's generated message.
+
+It can contain the normal answer and, when thinking is used, thinking-related information.
+messages=[
+        {
+            "role": "user",
+            "content": "Reply with only: YES"
+        }
+    ],
+why do we pass a list of dictionary inside the messages ?
+chat() is expecting a collection of messages, where every message tells Ollama two things:
+
+WHO said it?  role : user
+WHAT did they say? conten : reply with yes
+
+And because a conversation can contain many messages, Ollama expects a list:
+
+messages = [
+    {
+        "role": "user",
+        "content": "Reply with Yes"
+    }
+]
+
+So:
+
+list
+ ↓
+contains messages
+
+dictionary
+ ↓
+describes one message
+
+
+
+◇ content
+
+The main text of the model's answer.
+
+

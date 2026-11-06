@@ -1,0 +1,101 @@
+This file is contains how many methods exist inside the files of tool folder
+
+
+# inspect_data
+
+1. inspect_dataset
+2. analyze_missing_values
+3. analyze_duplicates
+4. analyze_datatypes
+5. analyze_numeric_columns
+6. decide_missing_value_strategy
+7. inspect_problematic_values
+8. remove_duplicates
+9. prepare_missing_value_analysis
+10. inspect_missing_value_columns
+11. clean_numeric_column
+12. clean_abbreviated_numbers
+13. clean_boolean_column
+14. handle_missing_values
+15. clean_text_column
+16. convert_to_numeric
+17. validate_cleaning
+18. final_cleaning_report
+Total methods: 18
+
+# dataset_management
+
+1. load_dataset
+2. load_into_executor
+3. sync_dataframe
+4. show_active_dataset
+5. save_cleaned_dataset
+Total methods: 5
+
+# file_access
+
+1. check_path
+2. identify_path
+3. list_items
+4. get_file_type
+5. search_file
+6. get_location
+7. get_path
+8. get_file_info
+Total methods: 8
+
+# python_execution
+
+1. execute
+Total methods: 1
+
+# visualisation
+
+1. bar_chart
+2. line_chart
+3. scatter_plot
+4. histogram
+5. box_plot
+6. density_plot
+7. count_plot
+8. joint_plot
+9. pair_plot
+Total methods: 9
+
+# export_manager
+
+1. export_csv
+2. export_excel
+3. connect_to_mysql
+4. create_cursor
+5. create_database
+6. execute_query
+7. commit_changes
+8. close_connection
+9. pandas_to_mysql_type
+10. generate_create_table_query
+11. insert_dataframe_rows
+Total methods: 11
+
+# statistics
+
+1. inspect_statistical_data
+2. calculate_descriptive_stats
+3. analyze_distribution
+4. analyze_outliers
+5. analyze_correlation
+6. analyze_covariance
+7. z_two_tailed_test
+8. z_one_tailed_test
+9. t_two_tailed_test
+10. t_test_one_tailed
+11. anova
+12. chi_square_test
+13. confidence_interval
+14. statistical_summary
+Total methods: 14
+
+# TOTAL
+
+Total tools: 7
+Total methods across all tools: 66

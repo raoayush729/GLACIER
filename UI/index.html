@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLACIER</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+
+        <header class="topbar">
+            <div class="brand">
+                <div class="brand-icon"><img src="logo.png" alt="GLACIER"></div>
+                <div>
+                    <h1>GLACIER</h1>
+                    <p>AI DATA ANALYSIS ASSISTANT</p>
+                </div>
+            </div>
+
+            <div class="topbar-actions">
+                <button type="button" id="sqlAccessButton" class="sql-access-button">
+                    SQL ACCESS
+                </button>
+
+                <div class="status">
+                    <span class="status-dot" id="desktopStatusDot"></span>
+                    <span>DESKTOP INTERFACE</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <section class="welcome">
+                <p class="eyebrow">YOUR LOCAL AI ASSISTANT</p>
+                <h2>What are we working on today?</h2>
+                <p class="subtitle">
+                    Analyze data, execute SQL queries, automate workflows,
+                    and explore your results.
+                </p>
+            </section>
+
+            <section class="workspace">
+                <div class="section-heading">
+                    <h3>Workspace</h3>
+                    <span>READY FOR INPUT</span>
+                </div>
+
+                <div class="chat-area" id="chatArea">
+                    <div class="assistant-message">
+                        <div class="message-avatar"><img src="logo.png" alt="G"></div>
+                        <div class="message-content">
+                            <strong>GLACIER</strong>
+                            <p>
+                                Hey! I'm ready to help with your data
+                                analysis tasks. What would you like to do?
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="chatForm" class="input-area">
+                    <textarea
+                        id="messageInput"
+                        placeholder="Ask GLACIER to analyze your data..."
+                        rows="2"
+                        required
+                    ></textarea>
+
+                    <button type="submit" id="sendButton">
+                        Send
+                    </button>
+
+                    <button type="button" id="stopButton" class="stop-button" hidden>
+                        &#9632; Stop
+                    </button>
+                </form>
+                    <section id="actionOutput" class="action-output" hidden>
+                    <div class="action-output-header">
+                        <h3>SQL Action Output</h3>
+                        <span id="sqlRowCount">0 rows</span>
+                    </div>
+
+                    <div id="sqlStatus" class="sql-status"></div>
+
+                    <div class="sql-table-container">
+                        <table id="sqlResultTable">
+                            <thead></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </section>
+                    <!-- Dataset Viewer -->
+                <section id="datasetViewer" class="dataset-viewer" hidden>
+
+                    <div class="dataset-viewer-header">
+                        <div>
+                            <h3 id="datasetTitle">Dataset Viewer</h3>
+                            <p id="datasetPath">No dataset selected</p>
+                        </div>
+
+                        <div class="dataset-viewer-side">
+                            <span id="datasetDimensions">0 rows × 0 columns</span>
+
+                            <button id="datasetReload" class="dataset-reload-button" type="button">
+                                &#8635; Reload
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="datasetStatus" class="dataset-status">
+                        Ready to display dataset.
+                    </div>
+
+                    <div class="dataset-table-container">
+                        <table id="datasetTable">
+                            <thead></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                    <div class="dataset-pagination">
+                        <button id="datasetPrevious" type="button" disabled>
+                            Previous
+                        </button>
+
+                        <span id="datasetPageInfo">Page 0 of 0</span>
+
+                        <button id="datasetNext" type="button" disabled>
+                            Next
+                        </button>
+                    </div>
+
+                </section>
+                <p class="input-hint">
+                    Local desktop interface · Python backend connected
+                </p>
+
+                <p id="voiceStatus" class="input-hint">
+                    Voice assistant status: waiting for connection
+                </p>
+            </section>
+        </main>
+
+        <footer>
+            <span>GLACIER</span>
+            <span>LOCAL AI WORKSPACE</span>
+        </footer>
+        <!-- SQL ACCESS MODAL -->
+        <div
+            id="sqlAccessModal"
+            class="sql-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="sqlModalTitle"
+            hidden
+        >
+            <div class="sql-modal-backdrop" id="sqlModalBackdrop"></div>
+
+            <section class="sql-modal-card">
+                <div class="sql-modal-header">
+                    <div>
+                        <p class="eyebrow">DATABASE CONNECTION</p>
+                        <h2 id="sqlModalTitle">SQL ACCESS</h2>
+                    </div>
+
+                    <button
+                        type="button"
+                        id="sqlModalClose"
+                        class="sql-close-button"
+                        aria-label="Close SQL Access"
+                    >×</button>
+                </div>
+
+                <div class="sql-connection-status">
+                    <span id="sqlConnectionDot" class="connection-dot"></span>
+                    <span id="sqlConnectionLabel">Checking connection settings...</span>
+                </div>
+
+                <form id="sqlAccessForm">
+                    <label for="sqlHost">Host</label>
+                    <input
+                        id="sqlHost"
+                        name="host"
+                        type="text"
+                        placeholder="localhost"
+                        value="localhost"
+                        required
+                    >
+
+                    <label for="sqlPort">Port <span>(optional)</span></label>
+                    <input
+                        id="sqlPort"
+                        name="port"
+                        type="number"
+                        min="1"
+                        max="65535"
+                        placeholder="Default MySQL port (Optional)"
+                    >
+
+                    <label for="sqlUsername">Username</label>
+                    <input
+                        id="sqlUsername"
+                        name="username"
+                        type="text"
+                        placeholder="MySQL username (root)"
+                        autocomplete="username"
+                        required
+                    >
+
+                    <label for="sqlPassword">Password</label>
+                    <input
+                        id="sqlPassword"
+                        name="password"
+                        type="password"
+                        placeholder="Enter MySQL password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                    <p id="sqlAccessMessage" class="sql-access-message" role="status">
+                        Enter your MySQL connection details.
+                    </p>
+
+                    <div class="sql-modal-actions">
+                        <button type="button" id="sqlTestButton" class="secondary-button">
+                            Test Connection
+                        </button>
+
+                        <button type="submit" id="sqlSaveButton">
+                            Connect &amp; Save
+                        </button>
+                    </div>
+
+                    <button
+                        type="button"
+                        id="sqlDisconnectButton"
+                        class="disconnect-button"
+                        hidden
+                    >
+                        Disconnect
+                    </button>
+                </form>
+            </section>
+        </div>
+    </div>
+<!-- APPROVAL CARD (Yes / No / Edit) -->
+<div id="approvalModal" class="approval-modal" role="dialog" aria-modal="true" aria-labelledby="approvalTitle" hidden>
+    <div class="approval-backdrop"></div>
+    <section class="approval-card">
+        <p class="eyebrow" id="approvalEyebrow">REVIEW</p>
+        <h2 id="approvalTitle">Run this?</h2>
+        <p class="approval-description" id="approvalDescription"></p>
+        <div class="approval-banner error" id="approvalError" hidden></div>
+        <div class="approval-banner warning" id="approvalWarning" hidden></div>
+        <div class="approval-meta" id="approvalMeta"></div>
+        <div id="approvalFields"></div>
+        <div class="approval-actions">
+            <button type="button" class="approval-no" id="approvalNo">No</button>
+            <button type="button" class="approval-edit" id="approvalEdit">Edit</button>
+            <button type="button" id="approvalYes">Yes, execute</button>
+        </div>
+    </section>
+</div>
+
+<script>
+// ==============================
+// APPROVAL CARD: Yes / No / Edit
+// ==============================
+(function () {
+    const API = "http://127.0.0.1:8000";
+    const RISKY_SQL = /\b(drop|delete|truncate|alter|update)\b/i;
+
+    const modal = document.getElementById("approvalModal");
+    const card = modal.querySelector(".approval-card");
+    const eyebrow = document.getElementById("approvalEyebrow");
+    const title = document.getElementById("approvalTitle");
+    const description = document.getElementById("approvalDescription");
+    const errorBox = document.getElementById("approvalError");
+    const warningBox = document.getElementById("approvalWarning");
+    const meta = document.getElementById("approvalMeta");
+    const fieldsBox = document.getElementById("approvalFields");
+    const yesButton = document.getElementById("approvalYes");
+    const editButton = document.getElementById("approvalEdit");
+    const noButton = document.getElementById("approvalNo");
+
+    let current = null;
+    let editing = false;
+    let busy = false;
+    let originals = {};
+
+    function inputs() {
+        return fieldsBox.querySelectorAll("textarea, input");
+    }
+
+    function refreshWarning() {
+        let risky = false;
+
+        if (current && current.kind === "sql") {
+            inputs().forEach(el => {
+                if (el.dataset.name === "quary" && RISKY_SQL.test(el.value)) risky = true;
+            });
+        }
+
+        warningBox.hidden = !risky;
+        warningBox.textContent = risky
+            ? "This query can change or delete data. Check it carefully before running."
+            : "";
+    }
+
+    function setEditing(on) {
+        editing = on;
+        card.classList.toggle("editing", on);
+
+        inputs().forEach(el => {
+            if (!on) el.value = originals[el.dataset.name];
+            el.readOnly = !on;
+        });
+
+        editButton.textContent = on ? "Cancel edit" : "Edit";
+        yesButton.textContent = on ? "Run edited version" : "Yes, execute";
+
+        if (on) {
+            const first = inputs()[0];
+            if (first) first.focus();
+        }
+        refreshWarning();
+    }
+
+    function show(pending) {
+        current = pending;
+        busy = false;
+        originals = {};
+
+        eyebrow.textContent = pending.eyebrow || "REVIEW";
+        title.textContent = pending.title || "Run this?";
+        description.textContent = pending.description || "";
+
+        errorBox.hidden = !pending.error;
+        errorBox.textContent = pending.error || "";
+
+        meta.replaceChildren();
+        (pending.meta || []).forEach(item => {
+            const chip = document.createElement("span");
+            chip.textContent = `${item.label}: ${item.value}`;
+            meta.appendChild(chip);
+        });
+
+        fieldsBox.replaceChildren();
+        (pending.fields || []).forEach(field => {
+            const wrapper = document.createElement("div");
+            wrapper.className = "approval-field";
+
+            const label = document.createElement("label");
+            label.textContent = field.label;
+
+            const el = document.createElement(field.multiline ? "textarea" : "input");
+            if (!field.multiline) el.type = "text";
+            el.value = field.value;
+            el.readOnly = true;
+            el.spellcheck = false;
+            el.dataset.name = field.name;
+            originals[field.name] = field.value;
+
+            el.addEventListener("input", refreshWarning);
+
+            // Tab inserts 4 spaces instead of leaving the box.
+            if (field.multiline) {
+                el.addEventListener("keydown", event => {
+                    if (event.key === "Tab" && !el.readOnly) {
+                        event.preventDefault();
+                        const start = el.selectionStart;
+                        el.setRangeText("    ", start, el.selectionEnd, "end");
+                    }
+                });
+            }
+
+            wrapper.append(label, el);
+            fieldsBox.appendChild(wrapper);
+        });
+
+        yesButton.disabled = editButton.disabled = noButton.disabled = false;
+        modal.hidden = false;
+
+        // After an invalid edit, reopen in edit mode so it can be fixed.
+        setEditing(Boolean(pending.error));
+        if (!pending.error) yesButton.focus();
+    }
+
+    function hide() {
+        current = null;
+        editing = false;
+        modal.hidden = true;
+    }
+
+    async function submit(decision) {
+        if (!current || busy) return;
+
+        busy = true;
+        yesButton.disabled = editButton.disabled = noButton.disabled = true;
+
+        const payload = { id: current.id, decision };
+
+        if (decision === "yes" && editing) {
+            const edits = {};
+            inputs().forEach(el => {
+                if (el.value !== originals[el.dataset.name]) edits[el.dataset.name] = el.value;
+            });
+            if (Object.keys(edits).length) payload.edits = edits;
+        }
+
+        try {
+            const response = await fetch(`${API}/approval/respond`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+
+            // 404 = request already answered or expired: just close the card.
+            if (!response.ok && response.status !== 404) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+            hide();
+        } catch (error) {
+            busy = false;
+            yesButton.disabled = editButton.disabled = noButton.disabled = false;
+            errorBox.hidden = false;
+            errorBox.textContent = "Could not send your answer: " + error.message;
+        }
+    }
+
+    yesButton.addEventListener("click", () => submit("yes"));
+    noButton.addEventListener("click", () => submit("no"));
+    editButton.addEventListener("click", () => setEditing(!editing));
+
+    async function pollApproval() {
+        try {
+            const response = await fetch(`${API}/approval/pending`);
+
+            if (response.ok) {
+                const { pending } = await response.json();
+
+                if (pending && (!current || current.id !== pending.id)) show(pending);
+                else if (!pending && current) hide();
+            }
+        } catch (_) {
+            // Backend not reachable yet; try again.
+        }
+
+        setTimeout(pollApproval, 500);
+    }
+
+    pollApproval();
+})();
+</script>
+
+<script>
+        // ==============================
+    // SQL ACCESS
+    // ==============================
+
+    const sqlAccessButton = document.getElementById("sqlAccessButton");
+    const sqlAccessModal = document.getElementById("sqlAccessModal");
+    const sqlModalBackdrop = document.getElementById("sqlModalBackdrop");
+    const sqlModalClose = document.getElementById("sqlModalClose");
+
+    const sqlAccessForm = document.getElementById("sqlAccessForm");
+    const sqlHost = document.getElementById("sqlHost");
+    const sqlPort = document.getElementById("sqlPort");
+    const sqlUsername = document.getElementById("sqlUsername");
+    const sqlPassword = document.getElementById("sqlPassword");
+
+    const sqlTestButton = document.getElementById("sqlTestButton");
+    const sqlSaveButton = document.getElementById("sqlSaveButton");
+    const sqlDisconnectButton = document.getElementById("sqlDisconnectButton");
+
+    const sqlAccessMessage = document.getElementById("sqlAccessMessage");
+    const sqlConnectionDot = document.getElementById("sqlConnectionDot");
+    const sqlConnectionLabel = document.getElementById("sqlConnectionLabel");
+
+    const SQL_API = "http://127.0.0.1:8000";
+
+    let sqlCredentialsSaved = false;
+    let sqlRequestInProgress = false;
+
+
+    function setSQLMessage(message, type = "") {
+        sqlAccessMessage.textContent = message;
+        sqlAccessMessage.className = "sql-access-message";
+
+        if (type) {
+            sqlAccessMessage.classList.add(type);
+        }
+    }
+
+
+    function setSQLStatus(message, state = "") {
+        sqlConnectionLabel.textContent = message;
+        sqlConnectionDot.className = "connection-dot";
+
+        if (state) {
+            sqlConnectionDot.classList.add(state);
+        }
+    }
+
+
+    function setSQLBusy(busy) {
+        sqlRequestInProgress = busy;
+
+        sqlTestButton.disabled = busy;
+        sqlSaveButton.disabled = busy;
+        sqlDisconnectButton.disabled = busy;
+    }
+
+
+    function openSQLModal() {
+        sqlAccessModal.hidden = false;
+        refreshSQLStatus();
+        sqlHost.focus();
+    }
+
+
+    function closeSQLModal() {
+        if (sqlRequestInProgress) {
+            return;
+        }
+
+        sqlAccessModal.hidden = true;
+    }
+
+
+    sqlAccessButton.addEventListener("click", openSQLModal);
+    sqlModalClose.addEventListener("click", closeSQLModal);
+    sqlModalBackdrop.addEventListener("click", closeSQLModal);
+
+
+    document.addEventListener("keydown", event => {
+        if (event.key === "Escape" && !sqlAccessModal.hidden) {
+            closeSQLModal();
+        }
+    });
+
+
+    function getSQLFormData() {
+        const host = sqlHost.value.trim();
+        const username = sqlUsername.value.trim();
+        const password = sqlPassword.value;
+        const portText = sqlPort.value.trim();
+
+        if (!host || !username || !password) {
+            throw new Error("Enter the host, username, and password.");
+        }
+
+        let port = null;
+
+        if (portText !== "") {
+            port = Number(portText);
+
+            if (!Number.isInteger(port) || port < 1 || port > 65535) {
+                throw new Error("Port must be an integer from 1 to 65535.");
+            }
+        }
+
+        return {
+            host,
+            username,
+            password,
+            port
+        };
+    }
+
+
+    async function postSQLRequest(path, payload) {
+        const response = await fetch(`${SQL_API}${path}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                result.message || `Request failed with HTTP ${response.status}.`
+            );
+        }
+
+        return result;
+    }
+
+
+    async function refreshSQLStatus() {
+        try {
+            const response = await fetch(`${SQL_API}/sql-access/status`);
+
+            if (!response.ok) {
+                throw new Error("Could not read SQL connection status.");
+            }
+
+            const result = await response.json();
+
+            if (!result.success) {
+                throw new Error(result.message || "Could not read SQL status.");
+            }
+
+            sqlCredentialsSaved = Boolean(result.connected);
+
+            if (sqlCredentialsSaved) {
+                sqlHost.value = result.host || "";
+                sqlUsername.value = result.username || "";
+                sqlPort.value = result.port ?? "";
+
+                // Never fetch or display the saved password.
+                sqlPassword.value = "";
+
+                sqlPassword.required = true;
+                sqlPassword.placeholder = "Enter MySQL password";
+
+                sqlDisconnectButton.hidden = false;
+
+                setSQLStatus(
+                    "Credentials saved · Server reachability not verified",
+                    "online"
+                );
+            } else {
+                sqlPassword.required = true;
+                sqlPassword.placeholder = "Enter MySQL password";
+
+                sqlDisconnectButton.hidden = true;
+
+                setSQLStatus("No saved MySQL credentials");
+            }
+        } catch (error) {
+            sqlCredentialsSaved = false;
+
+            setSQLStatus("Could not read SQL status", "offline");
+            setSQLMessage(
+                "Could not contact GLACIER's API. Check that the Python backend is running.",
+                "error"
+            );
+        }
+    }
+
+
+    sqlTestButton.addEventListener("click", async () => {
+        let credentials;
+
+        try {
+            credentials = getSQLFormData();
+        } catch (error) {
+            setSQLMessage(error.message, "error");
+            return;
+        }
+
+        setSQLBusy(true);
+        setSQLMessage("Testing MySQL connection...");
+
+        try {
+            const result = await postSQLRequest(
+                "/sql-access/test",
+                credentials
+            );
+
+            if (!result.success) {
+                throw new Error(
+                    result.message || "MySQL connection failed."
+                );
+            }
+
+            setSQLMessage(
+                "Connection successful. Click Connect & Save to save these settings.",
+                "success"
+            );
+
+            setSQLStatus("MySQL connection test succeeded", "online");
+        } catch (error) {
+            setSQLMessage(error.message, "error");
+            setSQLStatus("Connection test failed", "offline");
+        } finally {
+            setSQLBusy(false);
+        }
+    });
+
+
+    sqlAccessForm.addEventListener("submit", async event => {
+        event.preventDefault();
+
+        let credentials;
+
+        try {
+            credentials = getSQLFormData();
+        } catch (error) {
+            setSQLMessage(error.message, "error");
+            return;
+        }
+
+        setSQLBusy(true);
+        setSQLMessage("Testing connection before saving...");
+
+        try {
+            // Step 1: Test the submitted credentials.
+            const testResult = await postSQLRequest(
+                "/sql-access/test",
+                credentials
+            );
+
+            if (!testResult.success) {
+                throw new Error(
+                    testResult.message || "MySQL connection failed."
+                );
+            }
+
+            // Step 2: Require a password before saving.
+            if (!credentials.password) {
+                throw new Error(
+                    "Enter the MySQL password to update the saved connection."
+                );
+            }
+
+            // Step 3: Save the credentials.
+            const saveResult = await postSQLRequest(
+                "/sql-access",
+                credentials
+            );
+
+            if (!saveResult.success) {
+                throw new Error(
+                    saveResult.message || "Could not save SQL settings."
+                );
+            }
+
+            // Step 4: Clear the password from the form.
+            sqlPassword.value = "";
+
+            // Step 5: Refresh the saved-credentials status.
+            await refreshSQLStatus();
+
+            setSQLMessage(
+                "MySQL connection settings saved successfully.",
+                "success"
+            );
+
+            // Step 6: Close SQL ACCESS automatically.
+            setTimeout(() => {
+                closeSQLModal();
+            }, 500);
+
+        } catch (error) {
+            setSQLMessage(error.message, "error");
+
+        } finally {
+            setSQLBusy(false);
+        }
+    });
+
+
+    sqlDisconnectButton.addEventListener("click", async () => {
+        const confirmed = window.confirm(
+            "Disconnect GLACIER from MySQL and clear its saved credentials? " +
+            "Your databases and tables will not be deleted."
+        );
+
+        if (!confirmed) {
+            return;
+        }
+
+        setSQLBusy(true);
+        setSQLMessage("Disconnecting...");
+
+        try {
+            const result = await postSQLRequest(
+                "/sql-access/disconnect",
+                {}
+            );
+
+            if (!result.success) {
+                throw new Error(
+                    result.message || "Could not disconnect MySQL."
+                );
+            }
+
+            sqlAccessForm.reset();
+            sqlHost.value = "localhost";
+            sqlPassword.required = true;
+            sqlPassword.placeholder = "Enter MySQL password";
+
+            setSQLMessage(
+                "Credentials cleared. Your MySQL data was not changed.",
+                "success"
+            );
+
+            await refreshSQLStatus();
+        } catch (error) {
+            setSQLMessage(error.message, "error");
+        } finally {
+            setSQLBusy(false);
+        }
+    });
+
+
+    // Read status when GLACIER starts.
+    refreshSQLStatus();
+    const chatForm = document.getElementById("chatForm");
+    const messageInput = document.getElementById("messageInput");
+    const chatArea = document.getElementById("chatArea");
+    const sendButton = document.getElementById("sendButton");
+    const actionOutput = document.getElementById("actionOutput");
+    const sqlStatus = document.getElementById("sqlStatus");
+    const sqlRowCount = document.getElementById("sqlRowCount");
+    const sqlResultTable = document.getElementById("sqlResultTable");
+    // Dataset Viewer elements
+    const datasetViewer = document.getElementById("datasetViewer");
+    const datasetTitle = document.getElementById("datasetTitle");
+    const datasetPath = document.getElementById("datasetPath");
+    const datasetDimensions = document.getElementById("datasetDimensions");
+    const datasetStatus = document.getElementById("datasetStatus");
+    const datasetTable = document.getElementById("datasetTable");
+    const datasetPrevious = document.getElementById("datasetPrevious");
+    const datasetNext = document.getElementById("datasetNext");
+    const datasetPageInfo = document.getElementById("datasetPageInfo");
+    const datasetReload = document.getElementById("datasetReload");
+    // GLACIER voice mode + speech.
+    const VOICE_API = "http://127.0.0.1:8000";
+
+    function setVoiceMode(mode) {
+        fetch(`${VOICE_API}/voice-event`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ type: "mode", mode })
+        }).catch(() => {});
+    }
+
+    // Speak the reply with the system voice (markdown stripped, capped in length).
+    function speakResponse(text) {
+        return new Promise(resolve => {
+            const clean = text.replace(/[`*_#>|]/g, " ").replace(/\s+/g, " ").trim().slice(0, 700);
+            if (!clean || !window.speechSynthesis) return resolve();
+
+            const utterance = new SpeechSynthesisUtterance(clean);
+            utterance.onend = utterance.onerror = () => resolve();
+            setTimeout(resolve, 60000); // safety: never stay in "speaking" forever
+
+            speechSynthesis.cancel();
+            speechSynthesis.speak(utterance);
+        });
+    }
+
+    // GLACIER voice-event bridge.
+    const voiceEventUrl = "http://127.0.0.1:8000/voice-event/next";
+
+    let voicePolling = false;
+    let voiceRequestPending = false;
+    const pendingVoiceCommands = [];
+    let processingVoiceQueue = false;
+    // ============================================================
+    // GLACIER VOICE EVENT BRIDGE
+    // ============================================================
+    async function processVoiceQueue() {
+        if (processingVoiceQueue || sendButton.disabled) {
+            return;
+        }
+
+        processingVoiceQueue = true;
+
+        try {
+            while (pendingVoiceCommands.length > 0) {
+                // Wait until the previous chat request finishes.
+                if (sendButton.disabled) {
+                    break;
+                }
+
+                const message = pendingVoiceCommands.shift();
+
+                messageInput.value = message;
+
+                messageInput.dispatchEvent(
+                    new Event("input", { bubbles: true })
+                );
+
+                // Submit through GLACIER's existing chat handler.
+                voiceRequestPending = true;
+                chatForm.requestSubmit();
+
+                // Wait until the current chat request finishes.
+                while (sendButton.disabled) {
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                }
+            }
+        } finally {
+            processingVoiceQueue = false;
+        }
+    }
+
+    async function pollGlacierVoiceEvents() {
+        if (voicePolling) return;
+
+        voicePolling = true;
+
+        try {
+            const response = await fetch(voiceEventUrl);
+
+            if (!response.ok) {
+                throw new Error(
+                    `Voice bridge returned HTTP ${response.status}`
+                );
+            }
+
+            const event = await response.json();
+
+            const voiceLabel = document.getElementById("voiceStatus");
+            if (voiceLabel) voiceLabel.textContent = "Voice assistant: " + (event.mode || "offline");
+
+            // Show the command live in the chat box while the user is speaking.
+            if (event.mode === "listening" && event.partial) {
+                messageInput.value = event.partial;
+            }
+
+            if (event.type === "status") {
+                console.log("GLACIER voice status:", event.status);
+
+                const statusElement =
+                    document.getElementById("voiceStatus");
+
+                if (statusElement) {
+                    statusElement.textContent = event.status;
+                }
+
+                return;
+            }
+
+            if (event.type !== "command") {
+                return;
+            }
+
+            const message = (event.message || "").trim();
+
+            if (!message) {
+                return;
+            }
+
+            pendingVoiceCommands.push(message);
+            processVoiceQueue();
+
+        } catch (error) {
+            console.error(
+                "GLACIER voice bridge error:",
+                error
+            );
+
+        } finally {
+            voicePolling = false;
+        }
+    }
+
+
+// Check for voice events every 300 milliseconds.
+setInterval(pollGlacierVoiceEvents, 150);
+    // Send the prompt when Enter is pressed.
+    messageInput.addEventListener("keydown", function(event) {
+
+        // Check whether Enter was pressed without Shift.
+        if (event.key === "Enter" && !event.shiftKey) {
+
+            // Prevent Enter from inserting a new line.
+            event.preventDefault();
+
+            // Ignore empty or whitespace-only prompts.
+            if (!messageInput.value.trim()) {
+                return;
+            }
+
+            // Trigger the existing Send button.
+            sendButton.click();
+        }
+    });
+
+    // Dataset pagination state
+    const datasetPageSize = 100;
+    let currentDatasetOffset = 0;
+    let currentDatasetTotalRows = 0;
+    let currentDatasetColumns = [];
+    let datasetRequestId = 0;
+
+    function addMessage(sender, text, className) {
+        const message = document.createElement("div");
+        message.className = className;
+        message.style.marginBottom = "24px";
+
+        const avatar = document.createElement("div");
+        avatar.className = "message-avatar";
+        if (sender === "You") {
+            avatar.textContent = "Y";
+        } else {
+            const logo = document.createElement("img");
+            logo.src = "logo.png";
+            logo.alt = "G";
+            avatar.appendChild(logo);
+        }
+
+        const content = document.createElement("div");
+        content.className = "message-content";
+
+        const heading = document.createElement("strong");
+        heading.textContent = sender.toUpperCase();
+
+        const paragraph = document.createElement("p");
+        paragraph.style.whiteSpace = "pre-wrap";
+        paragraph.textContent = text;
+
+        content.appendChild(heading);
+        content.appendChild(paragraph);
+        message.appendChild(avatar);
+        message.appendChild(content);
+
+        message.style.display = "flex";
+        message.style.alignItems = "flex-start";
+        message.style.gap = "13px";
+
+        chatArea.appendChild(message);
+        chatArea.scrollTop = chatArea.scrollHeight;
+
+        return paragraph;
+    }
+
+    function displaySQLResults(data) {
+        // Hide the panel if this response has no SQL results.
+        if (!data || data.type !== "sql_result") {
+            return;
+        }
+
+        // Show the Action Output panel.
+        actionOutput.hidden = false;
+
+        // Display the operation status.
+        sqlStatus.textContent = data.success
+            ? "SQL query executed successfully."
+            : "SQL query failed.";
+
+        // Display the returned row count.
+        const rowCount = data.row_count ?? 0;
+        sqlRowCount.textContent =
+            `${rowCount} ${rowCount === 1 ? "row" : "rows"}`;
+
+        // Clear results from the previous query.
+        const thead = sqlResultTable.querySelector("thead");
+        const tbody = sqlResultTable.querySelector("tbody");
+
+        thead.replaceChildren();
+        tbody.replaceChildren();
+
+        // Build the column headers.
+        const headerRow = document.createElement("tr");
+
+        (data.columns || []).forEach(column => {
+            const th = document.createElement("th");
+            th.textContent = String(column);
+            headerRow.appendChild(th);
+        });
+
+        thead.appendChild(headerRow);
+
+        // Build the result rows.
+        (data.rows || []).forEach(row => {
+            const tr = document.createElement("tr");
+
+            row.forEach(value => {
+                const td = document.createElement("td");
+                td.textContent = value == null ? "" : String(value);
+                tr.appendChild(td);
+            });
+
+            tbody.appendChild(tr);
+        });
+    }
+
+    function displayDatasetViewer(data, startOffset = 0) {
+    if (!data || data.type !== "dataset_viewer" || !data.success) {
+        return;
+    }
+
+    datasetViewer.hidden = false;
+
+    datasetTitle.textContent = data.file_name || "Dataset Viewer";
+    datasetPath.textContent = data.file_path || "";
+    datasetDimensions.textContent =
+        `${Number(data.row_count).toLocaleString()} rows × ` +
+        `${Number(data.column_count).toLocaleString()} columns`;
+
+    currentDatasetTotalRows = Number(data.row_count) || 0;
+    currentDatasetColumns = Array.isArray(data.columns) ? data.columns : [];
+
+    // Stay on the same page after a reload, unless that page no longer exists.
+    const offset = startOffset < currentDatasetTotalRows ? startOffset : 0;
+    currentDatasetOffset = offset;
+
+    loadDatasetPage(offset);
+}
+
+async function loadDatasetPage(offset) {
+    const requestId = ++datasetRequestId;
+
+    datasetStatus.textContent = "Loading dataset rows...";
+    datasetPrevious.disabled = true;
+    datasetNext.disabled = true;
+
+    try {
+        const response = await fetch(
+            `http://127.0.0.1:8000/dataset/rows?offset=${offset}&limit=${datasetPageSize}`
+        );
+
+        if (!response.ok) {
+            throw new Error(`API returned HTTP ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (requestId !== datasetRequestId) {
+            return;
+        }
+
+        if (!data.success) {
+            throw new Error(data.message || "Could not load dataset rows.");
+        }
+
+        currentDatasetOffset = data.offset;
+        currentDatasetTotalRows = data.total_rows;
+        currentDatasetColumns = data.columns || [];
+
+        renderDatasetTable(data.columns || [], data.rows || [], currentDatasetOffset);
+
+        const totalPages = Math.ceil(
+            currentDatasetTotalRows / datasetPageSize
+        );
+
+        const currentPage = currentDatasetTotalRows === 0
+            ? 0
+            : Math.floor(currentDatasetOffset / datasetPageSize) + 1;
+
+        datasetPageInfo.textContent =
+            `Page ${currentPage} of ${totalPages}`;
+
+        if (currentDatasetTotalRows === 0) {
+            datasetStatus.textContent = "The dataset contains no rows.";
+        } else {
+            datasetStatus.textContent =
+                `Showing ${currentDatasetOffset + 1}–` +
+                `${Math.min(
+                    currentDatasetOffset + data.rows.length,
+                    currentDatasetTotalRows
+                )} of ${currentDatasetTotalRows.toLocaleString()} rows`;
+        }
+
+        datasetPrevious.disabled = currentDatasetOffset === 0;
+
+        datasetNext.disabled =
+            currentDatasetOffset + data.rows.length >= currentDatasetTotalRows;
+
+    } catch (error) {
+        if (requestId !== datasetRequestId) {
+            return;
+        }
+
+        datasetStatus.textContent = `Could not load dataset: ${error.message}`;
+        datasetPageInfo.textContent = "Page unavailable";
+        datasetPrevious.disabled = true;
+        datasetNext.disabled = true;
+    }
+}
+
+    // startIndex = number of rows before this page, so page 2 continues at 101, 102, ...
+    function renderDatasetTable(columns, rows, startIndex = 0) {
+        const thead = datasetTable.querySelector("thead");
+        const tbody = datasetTable.querySelector("tbody");
+
+        thead.replaceChildren();
+        tbody.replaceChildren();
+
+        const headerRow = document.createElement("tr");
+
+        // Row-number column header.
+        const indexHeader = document.createElement("th");
+        indexHeader.className = "row-index";
+        indexHeader.textContent = "#";
+        headerRow.appendChild(indexHeader);
+
+        columns.forEach(column => {
+            const th = document.createElement("th");
+            th.textContent = String(column);
+            headerRow.appendChild(th);
+        });
+
+        thead.appendChild(headerRow);
+
+        rows.forEach((row, rowNumber) => {
+            const tr = document.createElement("tr");
+
+            // Row number, starting from 1 and continuing across pages.
+            const indexCell = document.createElement("td");
+            indexCell.className = "row-index";
+            indexCell.textContent = (startIndex + rowNumber + 1).toLocaleString();
+            tr.appendChild(indexCell);
+
+            row.forEach(value => {
+                const td = document.createElement("td");
+                td.textContent = value == null ? "" : String(value);
+                tr.appendChild(td);
+            });
+
+            tbody.appendChild(tr);
+        });
+    }
+
+    datasetPrevious.addEventListener("click", () => {
+        if (currentDatasetOffset > 0) {
+            loadDatasetPage(
+                Math.max(0, currentDatasetOffset - datasetPageSize)
+            );
+        }
+    });
+
+    datasetNext.addEventListener("click", () => {
+        const nextOffset = currentDatasetOffset + datasetPageSize;
+
+        if (nextOffset < currentDatasetTotalRows) {
+            loadDatasetPage(nextOffset);
+        }
+    });
+
+    // Reload: ask the backend to run show_active_dataset() again, then redraw the table.
+    datasetReload.addEventListener("click", async () => {
+        datasetReload.disabled = true;
+        datasetReload.textContent = "Reloading...";
+
+        try {
+            const response = await fetch("http://127.0.0.1:8000/dataset/reload", {
+                method: "POST"
+            });
+            const data = await response.json();
+
+            if (!data.success) {
+                throw new Error(data.message || "Could not reload the dataset.");
+            }
+
+            displayDatasetViewer(data.dataset_viewer, currentDatasetOffset);
+        } catch (error) {
+            datasetStatus.textContent = `Could not reload dataset: ${error.message}`;
+        } finally {
+            datasetReload.disabled = false;
+            datasetReload.innerHTML = "&#8635; Reload";
+        }
+    });
+    // ============================================================
+    // STOP BUTTON: cancel the running request and go back to stable
+    // ============================================================
+    const stopButton = document.getElementById("stopButton");
+    let currentRequest = null;     // { controller, stopped } for the request in progress
+
+    function stopCurrentRequest() {
+        if (!currentRequest || currentRequest.stopped) return;
+
+        currentRequest.stopped = true;
+        currentRequest.controller.abort();                 // the UI stops waiting immediately
+        pendingVoiceCommands.length = 0;                   // forget voice commands queued behind it
+
+        // Tell the Python brain to stop planning / running further steps.
+        fetch(`${VOICE_API}/cancel`, { method: "POST" }).catch(() => {});
+
+        if (window.speechSynthesis) speechSynthesis.cancel();   // stop speaking
+        setVoiceMode("stable");                                  // orb goes back to stable
+    }
+
+    stopButton.addEventListener("click", stopCurrentRequest);
+
+    // Esc also stops the current request.
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") stopCurrentRequest();
+    });
+
+    chatForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const fromVoice = voiceRequestPending;
+        voiceRequestPending = false;
+
+        const message = messageInput.value.trim();
+
+        if (!message) {
+            return;
+        }
+
+        addMessage("You", message, "user-message");
+
+        messageInput.value = "";
+        sendButton.disabled = true;
+        sendButton.textContent = "Thinking...";
+
+        const request = { controller: new AbortController(), stopped: false };
+        currentRequest = request;
+        chatForm.classList.add("busy");     // hides Send, shows Stop
+        stopButton.hidden = false;
+
+        const startTime = performance.now();
+
+        const responseElement = addMessage(
+            "GLACIER",
+            "Thinking... 0.0s",
+            "assistant-message"
+        );
+
+        // Create a separate element for the processing duration.
+        const timingElement = document.createElement("p");
+        timingElement.className = "response-timing";
+        timingElement.textContent = "Working...";
+        timingElement.style.fontSize = "11px";
+        timingElement.style.color = "#8495ac";
+        timingElement.style.marginTop = "8px";
+
+        responseElement.parentElement.appendChild(timingElement);
+
+        // Update the live timer every 100 milliseconds.
+        const timerInterval = setInterval(() => {
+            const elapsed = (performance.now() - startTime) / 1000;
+            responseElement.textContent = `Thinking... ${elapsed.toFixed(1)}s`;
+        }, 100);
+
+        try {
+            const response = await fetch(
+                "http://127.0.0.1:8000/chat",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    signal: request.controller.signal,
+                    body: JSON.stringify({
+                        message: message,
+                        voice: fromVoice
+                    })
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error(
+                    `API returned HTTP ${response.status}`
+                );
+            }
+
+            const result = await response.json();
+
+            displaySQLResults(result.action_output);
+            displayDatasetViewer(result.dataset_viewer);
+
+            responseElement.textContent = result.response ||
+                "GLACIER returned an empty response.";
+
+            if (fromVoice) {
+                setVoiceMode("responding");
+                speakResponse(result.spoken || responseElement.textContent).finally(() => setVoiceMode("stable"));
+            }
+
+        } catch (error) {
+            if (request.stopped) {
+                responseElement.textContent = "Stopped.";
+            } else {
+                if (fromVoice) setVoiceMode("stable");
+                responseElement.textContent =
+                    "Could not contact GLACIER's Python API. " +
+                    "Check that the API is running at " +
+                    "http://127.0.0.1:8000. Details: " + error.message;
+            }
+        } finally {
+            clearInterval(timerInterval);
+
+            const elapsed = (performance.now() - startTime) / 1000;
+
+            timingElement.textContent = request.stopped
+                ? `Stopped after ${elapsed.toFixed(2)}s`
+                : `Worked for ${elapsed.toFixed(2)}s`;
+
+            chatForm.classList.remove("busy");
+            stopButton.hidden = true;
+            currentRequest = null;
+
+            sendButton.disabled = false;
+            sendButton.textContent = "Send";
+            messageInput.focus();
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+    });
+</script>
+</body>
+</html>

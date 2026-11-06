@@ -1,0 +1,1154 @@
+◆ if not
+Used to check if something is False. If the condition is False, the code inside the if block runs.
+
+PATH = Any location/address on your computer
+
+
+◆ .is_file()
+
+A pathlib Path method that checks whether the given path exists and is a file. It returns True or False.
+
+FILE = An actual item containing data
+
+
+◆ .is_dir()
+
+A pathlib Path method that checks whether the given path exists and is a directory/folder. It returns True or False.
+
+DIRECTORY = A folder
+
+
+◆ r"C:\Users\ayush"
+
+r is used to avoid default python \ functions like \n
+
+
+◆ .rglob()
+
+A Path method that recursively searches through a directory and all of its subdirectories. (Folders inside folders)
+
+
+"*"
+
+The * wildcard means match all files and folders.
+
+
+
+◇ None
+
+A special Python value that represents the absence of a value or result.
+
+
+◆ .stem
+
+A Path object property that returns the file name without its extension.
+
+Example:
+sales.csv → sales
+monthly_sales.xlsx → monthly_sales
+
+sales.csv
+  │    │
+  │    └── suffix → .csv
+  │
+  └────── stem → sales
+
+name → sales.csv
+
+
+return None
+
+Stops the function and returns no actual value.
+
+
+self.function
+
+in a single class to use a function inside a different function we can use self parameter to access it
+
+
+◆ .split()
+
+A string method that splits text into separate parts and returns them as a list.
+
+Example:
+"amazon sales".split()
+
+Result:
+["amazon", "sales"]
+
+
+
+◇ io
+
+A built-in Python module used for handling input/output operations.
+
+
+◆ StringIO()
+
+Creates an in-memory text stream that can store text like a file.
+
+
+◆ redirect_stdout()
+
+Temporarily redirects print() output from the terminal to another destination.
+
+
+◆ getvalue()
+
+Returns the text currently stored inside a StringIO object.
+
+
+\n
+
+Represents a newline character in a Python string.
+
+
+Dictionary access
+
+Using dictionary["key"] retrieves the value stored under that key.
+
+
+
+◆ eval()
+
+A built-in Python function that evaluates a Python expression and returns its result.
+
+Example:
+eval("10 + 20") → 30
+
+Expression ka simple meaning:
+
+Code ka aisa piece jo kisi value/result ko produce karta hai.
+
+"mujhe df.head() ka result do"
+
+Ye ek expression hai: because its giving a result
+
+eval() → evaluates an expression and returns its result
+
+
+◆ exec()
+
+A built-in Python function that executes Python code provided as a string.
+
+Example:
+exec("print('Hello')")
+
+Ye assignments, imports, loops, if statements, function definitions, etc. chala sakta hai.
+
+df = pd.read_csv(...)
+
+"df naam ke variable mein value store karo"
+
+Ye assignment statement hai:
+
+exec() → executes code, doesn't return the expression's result by default
+
+
+
+◇ Attribute / Property
+
+A value or piece of information stored on an object that can usually be accessed without parentheses.
+
+
+◇ Method
+
+A function that belongs to an object and is called using parentheses when it needs to be executed.
+
+
+◆ .as_posix()
+
+A Path method that converts a path into a string using forward slashes (/).
+
+
+
+===========================================================PANDAS FUNCTIONS============================================================
+
+
+◆ df.head()
+
+Returns the first 5 rows of a DataFrame by default.
+
+
+◆ df.shape
+
+Returns a tuple containing:
+(rows, columns)
+
+
+◆ df.columns
+Returns the names of all columns in the DataFrame.
+
+
+◆ df.dtypes
+Returns the data type of each column.
+
+
+◆ df.isnull()
+Checks every value and returns True where a value is missing and False where it is not.
+
+
+◆ df.isnull().sum()
+Counts the missing values in each column.
+
+
+◆ .to_csv() 
+Pandas function that converts the DataFrame into a CSV file.
+
+
+◆ file_path
+tells Pandas where and under what name to save it.
+
+
+◆ index=False 
+prevents Pandas from adding the DataFrame index as an extra column.
+
+
+◆ df.duplicated()
+Checks whether each row is a duplicate of a previous row.
+
+
+◆ df.duplicated().sum()
+Counts the total number of duplicate rows.
+
+
+◆ df.drop_duplicates()
+Removes duplicate rows and returns the resulting DataFrame.
+
+
+◆ df.describe()
+Returns statistical summary information for appropriate numeric columns.
+
+
+◆ df.info()
+
+Displays DataFrame information such as columns, data types, non-null counts and memory usage.
+
+
+◆ df.shape[0]
+
+Returns the number of rows.
+
+
+◆ df.shape[1]
+
+Returns the number of columns.
+
+
+◆ df.columns
+
+Returns the column names.
+
+
+◆ df.dtypes.to_dict()
+
+Converts the column data types information into a Python dictionary.
+
+
+◆ df.dropna
+
+Removes rows where any column has a missing value.
+
+
+
+◆ df.dropna(subset=[column])
+
+Remove only the rows where the specified column contains a missing value.
+
+◆ tolist()
+A Pandas/NumPy method that converts a Series or array-like object into a normal Python list.
+Example:
+df["Title"].head(3).tolist()
+Result:
+["Apple AirPods", "BOYA Microphone", "USB Cable"]
+
+
+
+◇ Series
+A one-dimensional Pandas data structure containing values associated with labels.
+
+
+◆ dtype
+Returns the data type of a Pandas Series/column.
+
+
+
+◆ df[column].kurt()
+a pandas function that give excess kurtosis of a column.
+excess kurtosis - 0 is the similer to normal distribution,
+greater than 0 means hevier tails, extreme value tendency,
+less than 0(-1-2) means lighter tails, extreme value tendency comparatively low.
+
+Eg:
+Dataset A
+Kurtosis = 0.2
+        ↓
+Normal ke kaafi similar
+
+
+Dataset B
+Kurtosis = 6
+        ↓
+Heavy tails
+        ↓
+Extreme observations ka influence ho sakta hai
+
+
+Dataset C
+Kurtosis = 100
+        ↓
+Bahut heavy tails
+        ↓
+Extreme values strongly present ho sakti hain
+
+
+◆ ddof = 0
+tells pandas how many degrees of freedom to subtract when calculating standard deviation.
+it simply as a calculation setting that tells pandas whether you're calculating population or sample standard deviation.
+=0 Means:
+Don't subtract anything from the number of observations.
+So if you have:
+
+5 values
+
+then:
+
+n = 5
+ddof = 0 (degree of freedom)
+n - ddof = 5 - 0 = 5
+
+
+◆ .std()
+find standard daviation of the data 
+
+
+◆ nunique()
+Returns the number of unique values in a Pandas Series/column.
+For example:
+4.5
+4.5
+4.2
+4.8
+4.2
+There are:
+3 unique values
+4.5
+4.2
+4.8
+
+
+
+◆ value_counts()
+A Pandas Series method that counts how many times each unique value occurs.
+df["Rating"].value_counts() 
+5.0    10000
+4.5     8000
+4.0     6000
+
+
+◆ to_dict()
+A Pandas method that converts certain Pandas objects into a Python dictionary.
+
+
+◆ df[column]
+Selects a specific column from a DataFrame using its column name.
+
+
+
+
+◆ astype()
+A Pandas method used to change the data type of a Series or DataFrame column.
+pd.to_datetime()
+A Pandas function that attempts to convert values into Pandas datetime values.
+eg
+pd.to_datetime(["2025-01-01", "2025-02-01"])
+2025-01-01
+2025-02-01
+
+
+
+◆ pd.to_numeric()
+Attempts to convert values into numeric data such as integers or floats.
+Parameters for pd.to_numeric()
+pd.to_numeric(arg, errors='raise', downcast=None, dtype_backend=...)
+arg
+The data/Series to convert.
+errors
+Controls what happens when conversion fails.
+"raise"
+Raises an error when conversion fails.
+"coerce"
+When conversion fails, replaces the invalid value with NaN instead of raising an error.
+"ignore"
+Leaves invalid input unchanged. This option is deprecated in newer Pandas versions.
+downcast
+Attempts to use a smaller numeric data type when possible.
+dtype_backend
+Controls the nullable dtype backend used for the result.
+
+
+errors="coerce"
+When conversion fails, replace the invalid value with NaN instead of raising an error.
+
+
+
+◆ .str.replace()
+A Pandas string method that searches for specified text or a pattern inside string values and replaces it with something else.
+Example:
+df["Price"].str.replace("$", "")
+"$100" → "100"
+"$250" → "250"
+
+
+◆ notna()
+Returns True for values that are not missing.
+
+
+◆ df[column].notna().sum()
+Counts the number of non-missing values in a column.
+
+
+◆ str.extract() is a Pandas method. Pandas' str.extract() expects a regex pattern as its argument.
+Pandas internally uses Python's regular-expression engine to process the pattern.  Python has a built-in re module for regular expressions.
+
+
+◆ pd.Series.map()
+A Pandas method that applies a mapping/function to every value in a Series.
+eg: df["is_best_seller"].map({"yes": True, "no": False})
+Mapping:
+"Best Seller" → True
+"No Badge" → False
+Confidence: High
+
+
+
+◆ df.isnull()
+returns True where a value is missing and False where it isn't.
+
+
+◆ duplicated()
+Pandas method that checks whether rows are duplicates.
+returns True for duplicate rows.
+
+
+◆ pd.api
+basically means:
+"Access Pandas' public API."
+api means Application Programming Interface.
+In Pandas, pd.api is a collection of interfaces/functions that Pandas provides for developers to perform specific operations.
+
+
+◆ pd.api.types
+types is the Pandas section/API containing functions related to checking and working with data types.
+
+
+◆ is_numeric_dtype()
+checks whether a Pandas Series, column, array, or datatype is numeric. (it can be integer or flaot)
+
+
+◆ .empty
+empty is a Pandas property/attribute used to check whether a Series or DataFrame contains zero elements.
+
+
+◆ .iloc[0]
+.iloc means select by position.
+[0] means the first position.
+
+
+
+◆ pd.crosstab() — a Pandas function used to create a frequency table showing how often 
+combinations of values from two categorical variables occur.
+It is commonly called a contingency table or cross-tabulation.
+It is not a Chi-square function itself.
+But it is extremely useful for a Chi-square test of independence, because Chi-square needs a table of observed frequencies.
+
+
+
+==========================================================REGEX String====================================================================
+(r"(\d+(?:\.\d+)?)")[0]
+
+Meaning:
+
+( --- opening of a group
+) --- closing of a group
+r --- raw string(\n)
+\ --- It introduces a special regex instruction. (\d,\w etc)
+\d --- one digit(1,2,3,4,5,6,7,8,9)
+\d+ --- one or more digit (1,12,234,543,6546456)
+( --- This starts another group.
+) --- closes the inner group
+?: --- (?: ... ) = group something together, but don't create a separate extracted result for that group.
+\. --- this means an actual decimal point
+\d+ --- again one or more digit
+? --- at the end ? is  optional — this part may or may not exist.
+
+
+
+So:
+\d+(?:\.\d+)?
+can match:
+4
+4.6
+25
+25.75 
+
+
+[0] --- df["Rating"].str.extract(...)
+
+Pandas extracts the matching part.
+
+So the result is not just one value.
+
+It is a Pandas DataFrame containing the extracted results.
+
+Think of it like:
+
+        0
+0      4.6
+1        4
+2        5
+3      3.5
+
+
+◆ regex=False
+
+Tells Pandas to treat the value being searched for as normal text instead of a regular expression pattern.
+
+
+◆ regex=True
+
+Tells Pandas to interpret the search pattern as a regular expression.
+
+
+-----------------------------------------------------------PYTHON FUNCTIONS-----------------------------------------------------------
+
+
+◆ round()
+
+Rounds a number to the specified number of decimal places.
+
+Example:
+round(10.876, 2) → 10.88
+
+
+◆ int()
+
+Converts a value into a Python integer (whole number).
+
+Example:
+int(10.8) → 10
+
+
+◆ len()
+
+Returns the number of items in an object.
+
+Example:
+len([10, 20, 30]) → 3
+
+For a DataFrame:
+len(df) → number of rows
+
+
+◆ str()
+
+A built-in Python function that converts a value into a string.
+
+Example:
+str(5000)
+
+Result:
+"5000"
+
+
+
+◆ upper()
+
+A Python string method that converts all letters in a string to uppercase.
+
+Example:
+"6k+".upper()
+
+Result:
+"6K+"
+
+
+◆ replace()
+
+A Python string method that replaces one piece of text with another.
+
+Example:
+"6K+".replace("K", "")
+
+Result:
+"6+"
+
+
+◆ startswith()
+
+A Python string method that checks whether a string starts with specific text.
+
+It returns True or False.
+
+Example:
+"6K+".startswith("6")
+
+Result:
+True
+
+
+
+◆ endswith()
+
+A Python string method that checks whether a string ends with specific text.
+
+It returns True or False.
+
+Example:
+"6K+".endswith("K+")
+
+Result:
+True
+
+
+
+◆ lower()
+A Python string method that converts all alphabetic characters in a string to lowercase.
+
+
+
+
+◆ re
+
+A built-in Python module used for working with Regular Expressions (regex).
+
+It provides functions for searching, matching, and extracting patterns from text.
+
+
+
+◆ bool() 
+It's a built-in Python function.
+converts a value into a Boolean value: True or False.
+eg bool(1) = True
+bool(0) = False
+
+
+
+◆ isalnum() 
+method returns True if a string is non-empty and contains only alphanumeric characters (letters and numbers). 
+Otherwise, it returns False.
+
+
+
+
+=====================================================Visualisation=================================================================
+◆ sns.countplot(data=df, x=column)
+
+means:
+
+sns
+↓
+Seaborn
+
+countplot
+↓
+count the occurrences of each distinct value
+
+data=df
+↓
+use our DataFrame
+
+x=column
+↓
+use this column as the thing whose values we count
+
+
+
+
+◆ sns.jointplot(data=df, x=x, y=y)
+What does "joint" mean?
+
+Joint = together.
+
+It combines:
+
+the relationship between X and Y
+the distribution of X
+the distribution of Y
+
+
+
+◆ sns.heatmap()
+What is a heatmap?
+
+A heatmap represents numbers using different visual intensity.
+
+For example, suppose the correlation matrix contains:
+
+
+
+
+◆ sns.heatmap(correlation_matrix, annot=True)
+
+Breakdown:
+
+sns
+↓
+Seaborn
+
+heatmap
+↓
+create a heatmap
+
+correlation_matrix
+↓
+the table of correlation values we calculated
+
+annot=True
+↓
+write the actual correlation numbers inside the cells
+
+
+
+◆ sns.pairplot(numeric_df)
+instead of manually saying:
+
+scatter_plot("Rating", "Number_of_reviews")
+scatter_plot("Rating", "Current/discounted_price")
+scatter_plot("Rating", "Listed_price")
+...
+
+Seaborn does this automatically.
+
+Our line:
+sns.pairplot(numeric_df)
+
+
+
+
+
+
+
+
+
+
+
+===============================mysql.connector → Python library that lets Python communicate with a MySQL server.================================
+
+
+
+
+Connection → the communication channel between GLACIER and MySQL.
+Cursor → an object used to send SQL commands to MySQL.
+connection.cursor() — creates a cursor object that allows Python to execute SQL statements on the connected MySQL server.
+cursor.execute() → sends one SQL statement to MySQL.
+connection.commit() → permanently saves changes such as CREATE, INSERT, UPDATE, or DELETE.
+connection.close() → closes the MySQL connection.
+DataFrame.to_csv() → saves a Pandas DataFrame as CSV.
+DataFrame.to_excel() → saves a Pandas DataFrame as Excel.
+
+
+
+
+
+◆ str.join() — A Python string method that combines multiple strings from an iterable into one string, placing the string before .join() between each item.
+columns = ["Name", "Age", "Salary"]
+
+If we do:
+
+",".join(columns)
+
+Python produces:
+
+Name,Age,Salary
+
+Why?
+
+Because "," is the separator.
+
+
+
+
+◆ cursor.executemany()
+
+Type:
+Python MySQL Connector cursor method
+
+Purpose:
+Execute the same SQL statement multiple times using multiple sets of values.
+
+Why we're using it:
+Because our DataFrame contains thousands of rows and we don't want to manually execute
+a separate INSERT statement for every row.
+
+
+
+◆ columns = df.columns.tolist()
+
+Converts the DataFrame's column names into a normal Python list.
+
+
+
+
+
+◆["%s"] * len(columns)
+
+             COLUMN NAMES
+                  ↓
+INSERT INTO amazon_products (Title, Rating, Price)
+                             
+                             VALUES
+                               ↓
+                         %s, %s, %s
+                         ↑   ↑   ↑
+                         │   │   │
+                         │   │   └── 3rd value
+                         │   └────── 2nd value
+                         └────────── 1st value
+
+
+%s       →       "Product A"
+%s       →       4.5
+%s       →       999.0
+
+And because the positions correspond:
+
+Column                  Value
+
+Title       ←────────── "Product A"
+Rating      ←────────── 4.5
+Price       ←────────── 999.0
+
+
+
+
+
+
+
+
+◆ df.itertuples()
+
+for row in df.itertuples(index=False, name=None):
+    rows = tuple(row)
+
+This is a Pandas DataFrame method.
+
+Its job is:
+
+Go through the DataFrame one row at a time and give you each row.
+
+Suppose your DataFrame is:
+
+Title          Rating       Price
+-----------------------------------
+Product A       4.5         999
+Product B       4.2         799
+Product C       4.8        1299
+
+Then:
+
+df.itertuples(index=False, name=None)
+
+will give us the rows one by one.
+
+Conceptually:
+
+row 1 → Product A, 4.5, 999
+row 2 → Product B, 4.2, 799
+row 3 → Product C, 4.8, 1299
+
+
+Why name=None?
+
+itertuples() can return named tuples.
+
+For example, without name=None, Pandas can conceptually give you something like:
+
+Pandas(Title="Product A", Rating=4.5, Price=999)
+
+We don't need that.
+
+We simply want:
+
+("Product A", 4.5, 999)
+
+So:
+
+name=None
+
+means:
+
+Give me ordinary tuples rather than named tuples.
+
+
+
+
+
+
+
+◇ JSON
+A text-based format used to store structured data such as lists,
+dictionaries, numbers, strings, and other values.
+
+◇ Persistent storage
+Storage that remains available after a program closes.
+
+◇ Path
+A location used to identify a file or folder on a computer.
+
+◇ Path object
+A Python object representing a file or folder path.
+
+◆ Path()
+A pathlib function/class used to create a Python object representing a file or folder path.
+
+◆ exists()
+A Path method that checks whether the specified file or folder exists.
+
+◆ mkdir()
+A Path method that creates a directory/folder.
+
+◆ load()
+A json function that reads JSON data from an open file and converts it into Python data.
+
+◆ dump()
+A json function that converts Python data into JSON and writes it to an open file.
+
+◆ datetime.now()
+Returns the current local date and time as a datetime object.
+
+◆ isoformat()
+A datetime method that converts a date and time into a standardized text representation.
+
+◆ add_memory()
+A MemoryManager method that creates and permanently saves a new memory.
+
+◆ save_memory()
+A MemoryManager method that writes the current memory list to the JSON file.
+
+◆ load_memory()
+A MemoryManager method that reads previously saved memories from the JSON file.
+
+◆ get_memories()
+A MemoryManager method that returns all currently loaded memories.
+
+
+◆ encoding="utf-8"
+This tells Python:
+
+Use UTF-8 to interpret the characters in this text file.
+
+Why?
+
+Because memory could contain:
+
+Ayush
+GLACIER
+₹
+é
+中文
+emoji 😎
+
+UTF-8 is a standard way of representing characters in text files.
+
+So:
+
+encoding="utf-8"
+
+helps Python correctly read/write those characters.
+
+
+
+
+
+◆ .splitlines()
+
+This is a Python string method.
+
+It takes one large string and separates it wherever there is a line break.
+
+text = "Hello\nMy name is Ayush\nI like Python"
+
+Then:
+
+text.splitlines()
+
+produces:
+
+[
+    "Hello",
+    "My name is Ayush",
+    "I like Python"
+]
+
+AND 
+
+"CONTENT: My Name is ayush
+ TYPE: personal
+ SCOPE: user
+ IMPORTANCE: high
+ LIFETIME: long_term"
+
+
+ becomes :
+ [
+    "CONTENT: My Name is ayush",
+    "TYPE: personal",
+    "SCOPE: user",
+    "IMPORTANCE: high",
+    "LIFETIME: long_term"
+]
+
+
+
+
+
+
+◆ hasattr(object, name): 
+Checks whether an object contains an attribute or method with the specified name. 
+Returns True if it exists and False otherwise.
+
+◆ getattr(object, name): 
+Retrieves an attribute or method from an object using its name dynamically.
+
+
+
+
+◆ get()
+methods = tool_knowledge.get("methods", {})
+
+get() belongs to Python dictionary (dict).
+
+Its basic syntax is:
+
+dictionary.get(key, default_value)
+
+So here:
+
+tool_knowledge.get("methods", {})
+
+means:
+
+"Go inside tool_knowledge, look for the key "methods".
+If it exists, give me its value.
+If it doesn't exist, give me {} instead."
+
+because if it didnt find any "methods" then it could give none which can cause error later to avoid that we give it default_value= {} 
+so that if it didnt find "methods" it will give an empty {} instead of an error
+
+
+
+
+◆ isinstance()   = isinstance(object, classinfo)
+
+is a built-in Python function that checks whether an object belongs to a specified data type or class, 
+including its subclasses. It returns either True or False.
+
+For example, 
+a = "HELLO
+isinstance(a,str)
+it can check whether a variable contains a string, an integer, a list, a dictionary, or an instance of a particular class.
+
+object - The variable or object whose type you want to check.
+
+classinfo - The data type, class, or tuple of types/classes you want to check against.
+
+
+
+
+◆ repr() is a built-in Python function that returns the official string representation of an object. It's especially useful for debugging because it makes certain invisible characters visible.
+
+Comparison.
+
+Example 1 — Using print()
+response = "Hello Glacier"
+
+print(response)
+
+Output:
+
+Hello Glacier
+
+
+Example 2 — Using repr()
+response = "Hello Glacier"
+
+print(repr(response))
+
+Output:
+
+'Hello Glacier'
+
+repr() shows that the value is a string with just adding 2 sinle quotes.
+
+
+
+
+◆ enumerate() is a built-in Python function.
+its commonly used with for loops when you want to access both:
+- The position or count of an item.
+- The item itself.
+
+
+
+
+◆ inspect.signature
+Python's inspect.signature() function lets us examine that signature programmatically.
+import inspect
+
+def analyze_missing_values(self):
+    return "Missing values analyzed"
+
+signature = inspect.signature(analyze_missing_values)
+
+print(signature)
+
+
+
+
+
+--------------------------------------------------QTable
+These are the important methods provided by the model framework. Some are inherited from its parent, QAbstractItemModel.
+Method	            Simple job	                                                Do we use it in Glacier?
+rowCount()	Reports the number of rows	                                Yes, we define our own
+__init__()	Sets up the model object	                                Yes, through super().__init__()
+columnCount()	Reports the number of columns	                                Yes, we define our own
+data()	        Provides the value for a particular cell	                        Yes, we define our own
+headerData()	Provides column names and row labels	                        Yes, we define our own
+index()	        Identifies a cell by its row and column	                                Qt provides the default implementation
+parent()	Finds the parent item in a hierarchical model	                Qt provides the default implementation; not central to our flat table
+flags()	        Describes what users can do with an item, such as select or edit it	We haven't customized it
+setData()	Changes a cell's value	                                        Not implemented by us; our viewer is currently read-only
+
+
+
+
+1. **`QApplication.instance()`** — Checks whether a `QApplication` object already exists and returns it if it does; otherwise, returns `None`.
+
+2. **`QApplication(sys.argv)`** — Creates a `QApplication` object that manages the GUI application's event handling and overall GUI environment.
+
+3. **`QVBoxLayout(window)`** — Creates a vertical layout inside the window to arrange widgets, such as the information label and dataset table, from top to bottom.
+
+4. **`QLabel(...)`** — Creates a text label to display dataset information, such as its name, file path, type, shape, and last operation.
+
+5. **`Qlabel().setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)`** — Allows the user to select and copy the information displayed in the label using the mouse.
+        setTextInteractionFlags() is a method provided by Qt's QLabel class.
+        Its job is to control how the user can interact with the text inside the label.
+        TextSelectableByMouse - This is the specific setting we're choosing.
+        It allows the user to select the label's text using the mouse, so they can copy useful information.
+        
+6. **`table.setWordWrap(False)`** — Prevents cell text from wrapping onto multiple lines, keeping each cell's content on a single line.
+
+7. **`table.setHorizontalScrollMode(QTableView.ScrollMode.ScrollPerPixel)`** — Makes horizontal scrolling move pixel by pixel instead of jumping between whole columns.
+
+8. **`table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Interactive)`** — Allows the user to manually resize table columns by dragging their header boundaries.
+
+9. **`app.processEvents()`** — Processes pending GUI events so the application can respond to them without waiting for the current code flow to finish.
+
+10. **`window.raise_()`** — Brings the window to the front of other windows when the operating system allows it.
+
+11. **`window.activateWindow()`** — Requests that the window become the active window so the user can interact with it.
+
+
+
+

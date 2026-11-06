@@ -1,0 +1,110 @@
+
+--------------------------------------PHASE 0 → Foundation
+
+Objective
+
+Set up the basic GLACIER project structure and isolated Python environment
+so all future tools, skills, agents, and libraries have an organized place to live.
+
+
+GLACIER Project
+        ↓
+Project Structure
+        ↓
+README.md
+requirements.txt
+.gitignore
+main.py
+core/
+skills/
+agents/
+tools/
+ui/
+data/
+        ↓
+Create Python Virtual Environment
+        ↓
+.venv/
+        ↓
+Install Required Libraries
+        ↓
+Isolated GLACIER Environment
+
+
+
+
+
+--------------------------------------PHASE 1 → File Access
+
+Objective
+
+Build a file-access system that allows GLACIER to locate, inspect, identify, 
+and search data files anywhere the user has permission to access on the laptop.
+
+
+User / Agent Request
+        ↓
+File Access System
+        ↓
+Receive Directory / Location
+        ↓
+Validate Path
+        ↓
+Identify File or Directory
+        ↓
+List Directory Contents
+        ↓
+Search Recursively
+        ↓
+Filter Supported Data Files
+        ↓
+Match File Name / Keywords
+        ↓
+0 Matches → File Not Found
+        ↓
+1 Match → Return File
+        ↓
+Multiple Matches → Show Possible Files
+        ↓
+Return File Information
+        ↓
+GLACIER receives file path / information
+
+
+
+--------------------------------------PHASE 2 → Python Execution
+
+Objective
+
+Build a Python execution system that allows GLACIER to execute Python operations, 
+maintain a persistent Python environment, capture output/errors, and return useful results.
+
+User / Agent Request
+        ↓
+Python Executor
+        ↓
+Accepts Python code
+        ↓
+exec()
+        ↓
+Runs Python statements
+        ↓
+Pandas / NumPy / other libraries
+        ↓
+Persistent namespace
+        ↓
+Variables remain available for next execution
+        ↓
+eval()
+        ↓
+Returns expression results
+        ↓
+Capture print() output
+        ↓
+Error handling
+        ↓
+Structured result
+        ↓
+GLACIER receives result
+
+

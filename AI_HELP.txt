@@ -1,0 +1,56 @@
+GPT/raoayush id
+file access 
+    def search_file(self,directory_path,file_name):
+        directory = Path(directory_path)
+        if directory.is_dir():
+            for item in directory.iterdir():
+                if item.is_file()and file_name.lower() in item.stem.lower():
+                    print(f'File found: {item}')
+                    return item
+
+            print('file not found')
+
+        else:
+            print('Invalid Directory')
+
+changes 
+claude/ raoayush id 
+
+    def search_file(self,directory_path,file_name):
+        directory = Path(directory_path)
+        if directory.is_dir():
+            matches = []
+            for item in directory.iterdir():
+                if item.is_file() and file_name.lower() in item.stem.lower():
+                    matches.append(item)
+
+            if len(matches) == 0:
+                print('file not found')
+
+            elif len(matches) == 1:
+                print(f'File found: {matches[0]}')
+                return matches[0]
+
+            else:
+                print(f"Sir, we have {len(matches)} files matching '{file_name}', which one should i take?")
+                for m in matches:
+                    print(f"  - {m.name}")
+                return matches
+
+        else:
+            print('Invalid Directory')
+
+
+
+
+Claude/ raoayush 
+some functions to add in file accessNeeded soon (Phase 1-2, before pandas work starts):
+
+search_all_locations(file_name) — right now search_file needs a directory_path you already know. But your own diagram says the LLM extracts a location word ("Desktop"). You'll want a version that loops through desktop, download, documents and searches all of them when the user doesn't specify a folder — e.g. "Glacier, find the sales file" with no location mentioned.
+is_readable_by_pandas(path) — checks the extension is .csv, .xlsx, .json, etc. Before Phase 2 hands a file to pandas, you want to reject .exe or .png early with a clear reason, not a pandas stack trace.
+
+Needed a bit later (Phase 4, cleaning/saving):
+
+get_file_size(path) — useful before loading huge files into memory, and useful info to report back ("this file is 400MB, might take a moment").
+get_last_modified(path) — lets you support "get the sales file I used most recently" when multiple matches exist, as a smarter alternative to always asking.
+save_file(dataframe, path) or at least a path-builder for where cleaned files go (e.g. auto-generate sales_cleaned.csv next to the original).

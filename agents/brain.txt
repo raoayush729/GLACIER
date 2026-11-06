@@ -1,0 +1,82 @@
+THE FLOW 
+
+# STARTING
+# ──────────────────────────────
+# ask_qwen()              
+# retrieve_memories()     
+# decide_memory()         
+# extract_memory()        
+
+
+# NEXT — MEMORY PIPELINE
+# ──────────────────────────────
+# parse_memory()          
+# validate_memory()       
+# store_memory()          
+# process_memory()        
+
+
+# THEN — REASONING PIPELINE
+# ──────────────────────────────
+# create_plan()                    
+# select_tool()                    
+# retrieve_tool_knowledge()        
+# select_method_and_arguments()    
+# method_validation()              
+# execute_tool()                   
+# handle_tool_result()             
+
+
+# THEN — MASTER CONTROLLER
+# ──────────────────────────────
+# Master_Mind()                    
+#
+# User Request
+#      ↓
+# Master_Mind()
+#      ↓
+# create_plan()
+#      ↓
+# select_tool()
+#      ↓
+# retrieve_tool_knowledge()
+#      ↓
+# select_method_and_arguments()
+#      ↓
+# method_validation()
+#      ↓
+# execute_tool()
+#      ↓
+# handle_tool_result()
+#      ↓
+# Final Response
+
+
+# FINAL
+# ──────────────────────────────
+# Brain.py COMPLETE
+#      ↓
+# main.py
+
+
+
+
+
+
+#--------------TESTING-------------------
+
+Phase 1 — Individual function tests
+
+Check each function's inputs, outputs, and error handling.
+
+Phase 2 — Integration tests
+
+Verify that the functions pass information correctly between stages.
+
+Phase 3 — Master_Mind() tests
+
+Run complete user requests through the entire Brain pipeline.
+
+Phase 4 — Failure and edge cases
+
+Test invalid methods, missing knowledge, malformed Qwen responses, and tool errors.
